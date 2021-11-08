@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 from googlesearch import search
-
+from pyroutelib3 import Router
 
 def meteo():
     """
@@ -31,7 +31,21 @@ def meteo():
 
     input("\n\nAppuyez sur Entrée pour continuer...")
 
-
+def itineraire():
+    lat1 = input("Entrez la latitude de la ville de départ")
+    lon1 = input("Entrez la longitude de la ville de départ")
+    lat2 = input("Entrez la latitude de la ville d'arrivée")
+    lon2 = input("Entrez la longitude de la ville d'arrivée")
+    router = Router("car")
+    start = router.findNode(lat1, lon1)
+    finish = router.findNode(lat2, lon2)
+    status, route = router.doRoute(start, finish)
+    if status == 'success':
+        pathLatLons = list(map(router.nodeLatLon, route))
+        print(pathLatLons)
+        
+        
+        
 def news():
     query = input('Que souhaitez vous rechercher? ')
     nbr_query = int(input('Combien de résultats ? : '))
