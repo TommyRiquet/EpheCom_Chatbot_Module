@@ -1,75 +1,62 @@
 # -*- coding: utf-8 -*-
-import requests
-from googlesearch import search
-from pyroutelib3 import Router
+import meteo
+import news
+import itineraire
 
-def meteo():
+
+def affichehelp():
     """
-    Utilisation de l'API de OpenWeatherMap
-    https://openweathermap.org/current#data
+    Affiche une liste de commandes disponibles
     :return:
     """
-
-    ville = input("De quelle ville voulez vous connaitre la meteo ? (Ex : Paris,Londres,Bruxelles)")
-    url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
-                                                                                "beb97c1ce62559bba4e81e28de8be095"
-    r_weather = requests.get(url_weather)
-    data = r_weather.json()
-
-    # RECUPERATION DES DONNEES
-    temp = data['main']['temp']
-    temp_min = data['main']['temp_min']
-    temp_max = data['main']['temp_max']
-    humidite = data['main']['humidity']
-    description_temps = data['weather'][0]['description']
-
-    # AFFICHAGE
-    print(
-        "temperature moyenne:  {}".format(temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)")
-    print("Taux d'humidite : {}".format(humidite) + "%")
-    print("Conditions climatiques : {}".format(description_temps))
-
-    input("\n\nAppuyez sur Entrée pour continuer...")
-
-def itineraire():
-    lat1 = input("Entrez la latitude de la ville de départ")
-    lon1 = input("Entrez la longitude de la ville de départ")
-    lat2 = input("Entrez la latitude de la ville d'arrivée")
-    lon2 = input("Entrez la longitude de la ville d'arrivée")
-    # moyen de transport
-    router = Router("car")
-    start = router.findNode(lat1, lon1)
-    finish = router.findNode(lat2, lon2)
-    status, route = router.doRoute(start, finish)
-    if status == 'success':
-        pathLatLons = list(map(router.nodeLatLon, route))
-        #affichage des couples de coordonées jusqu'à la destination
-        print(pathLatLons)
-
-        
-        
-        
-def news():
-    query = input('Que souhaitez vous rechercher? ')
-    nbr_query = int(input('Combien de résultats ? : '))
-    for i in search(query, tld='com', lang='fr', num=nbr_query, stop=nbr_query, pause=2):
-        print(i)
-    input("\n\nAppuyez sur Entrée pour continuer...")
+    print("Commandes disponibles :\n!meteo\n!news\n!itineraire\n")
 
 
 if __name__ == "__main__":
 
-    choix = -1
+    choix = ""
 
-    while choix != 0:
-        try:
-            choix = int(input("1)Meteo\n2)News\n0)Quitter\n\nChoix :"))
+    while choix != '0':
 
-        except:
-            print("Erreur")
+        # Récupération des entrées utilisateurs
+        choix = input()
 
-        if choix == 1:
-            meteo()
+        # Différents choix possibles
+        if choix.find('!help') == 0:
+            affichehelp()
 
-        elif choix == 2:
-            news()
+        elif choix.find('!meteo') == 0:
+
+            try:
+                ville = choix.split(' ')[1]
+                meteo.meteo(ville)
+            except (ValueError, IndexError, KeyError):
+                print("Ville manquante ou incorrecte (Ex: !meteo Paris)")
+
+        elif choix.find('!news') == 0:
+
+            subject = ""
+            nbr = 0
+            try:
+                array_nbr = [int(nbr) for nbr in choix.split() if nbr.isdigit()]
+                nbr = int(array_nbr[len(array_nbr)-1])
+            except (ValueError, IndexError, KeyError):
+                nbr = 0
+
+            try:
+                subject = choix[5:len(choix)-1]
+                if subject == " " or len(subject) == 0:
+                    print("Sujet invalide (Ex :!news IT 2)")
+            except (ValueError, IndexError, KeyError):
+                print("Sujet invalide (Ex :!news IT 2)")
+
+            else:
+                if nbr > 0 and nbr is not None and subject is not None:
+                    news.news(subject, nbr)
+                else:
+                    news.news(subject)
+
+        elif choix.find("!itineraire") == 0:
+
+            itineraire.itineraire()
+
