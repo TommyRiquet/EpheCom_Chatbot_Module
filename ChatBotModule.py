@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
 from googlesearch import search
-import webbrowser
 
 
 def meteo():
@@ -11,9 +10,9 @@ def meteo():
     :return:
     """
 
-    ville = input("De quelle ville voulez vous connaitre la meteo ? (Ex : Paris,London)")
-    url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&APPID=" \
-                                                                                "230b261060b9d52c56139e41ae47cf77"
+    ville = input("De quelle ville voulez vous connaitre la meteo ? (Ex : Paris,Londres,Bruxelles)")
+    url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
+                                                                                "beb97c1ce62559bba4e81e28de8be095"
     r_weather = requests.get(url_weather)
     data = r_weather.json()
 
@@ -25,18 +24,20 @@ def meteo():
     description_temps = data['weather'][0]['description']
 
     # AFFICHAGE
-    print("La temperature moyenne est de {} degres Celsius".format(temp))
-    print("Les temperatures varient entre {}".format(temp_min) + " a {} degres Celsius".format(temp_max))
-    print("Taux d'humidite de {}".format(humidite) + "%")
+    print(
+        "temperature moyenne:  {}".format(temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)")
+    print("Taux d'humidite : {}".format(humidite) + "%")
     print("Conditions climatiques : {}".format(description_temps))
 
-    
-    
+    input("\n\nAppuyez sur Entrée pour continuer...")
+
+
 def news():
     query = input('Que souhaitez vous rechercher? ')
-    for i in search(query, tld='com', lang='fr', num=10, stop=10, pause=2):
+    nbr_query = int(input('Combien de résultats ? : '))
+    for i in search(query, tld='com', lang='fr', num=nbr_query, stop=nbr_query, pause=2):
         print(i)
-        webbrowser.open(i)
+    input("\n\nAppuyez sur Entrée pour continuer...")
 
 
 if __name__ == "__main__":
@@ -44,7 +45,14 @@ if __name__ == "__main__":
     choix = -1
 
     while choix != 0:
-        choix = int(input("1)Meteo\n0)Quitter\n\nChoix :"))
+        try:
+            choix = int(input("1)Meteo\n2)News\n0)Quitter\n\nChoix :"))
+
+        except:
+            print("Erreur")
 
         if choix == 1:
             meteo()
+
+        elif choix == 2:
+            news()
