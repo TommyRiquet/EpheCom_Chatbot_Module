@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
+from googlesearch import search
+import webbrowser
 
 
 def meteo():
@@ -28,6 +30,13 @@ def meteo():
     print("Taux d'humidite de {}".format(humidite) + "%")
     print("Conditions climatiques : {}".format(description_temps))
 
+    
+    
+def news():
+    query = input('Que souhaitez vous rechercher? ')
+    for i in search(query, tld='com', lang='fr', num=10, stop=10, pause=2):
+        print(i)
+        webbrowser.open(i)
 
 
 if __name__ == "__main__":
