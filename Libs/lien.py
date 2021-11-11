@@ -3,11 +3,11 @@ import webbrowser
 
 def lien():
     site = input('Quel site souhaitez vous ouvrir? ')
-    if(site == "ephec"):
+    if(site.lower() == "ephec"):
         webbrowser.open("https://portail.ephec.be/")
-    elif(site == "tlca"):
+    elif(site.lower() == "tlca"):
         webbrowser.open("https://www.tlca.eu/courses")
-    elif(site == "inginious"):
+    elif(site.lower() == "inginious"):
         webbrowser.open("https://inginious.ephec.be/courselist")
 
 
