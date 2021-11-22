@@ -5,9 +5,10 @@
 ## todo  
 - [x] Module Meteo
 - [x] Module News
+- [x] Module Itinéraire 
 
 - [ ] Liens personnalisés
-- [ ] Module Itinéraire 
+
 
 
 
