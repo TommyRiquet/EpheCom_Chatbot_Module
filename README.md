@@ -1,17 +1,18 @@
 # EpheCom_Chatbot_Module
-> Projet de Chatbot pour l'application Ephecom 
+> Chatbot pour l'application Ephecom dans le cadre d'un projet pour le cours de developpement informatique II à l'Ephec
 
 
 ## todo  
-- [x] Module Meteo
-- [x] Module News
-- [x] Module Itinéraire 
+- [x] Module Meteo  : API openweathermap
+- [x] Module News   : Module googlesearch
+- [x] Module Itinéraire :Module openrouteservice
+- [x] Module de liens : ephec,inginious,tlca etc.... 
 
-- [ ] Liens personnalisés
+- [ ] Liens personnalisés 
 
 
 
 
 ## NOTE:  
-Ajouter de l'orienté objet 
-Commencer l'implémentation dans le noyau 
+Implémentation dans le noyau et utilisation de la DB pour enregistrer les commandes personnalisés 
+
