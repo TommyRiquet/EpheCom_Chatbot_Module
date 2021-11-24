@@ -2,6 +2,7 @@
 import meteo
 import news
 import itineraire
+import lien
 
 
 def affichehelp():
@@ -9,7 +10,8 @@ def affichehelp():
     Affiche une liste de commandes disponibles
     :return:
     """
-    print("Commandes disponibles :\n!meteo\n!news\n!itineraire\n")
+    print("Commandes disponibles :\n!meteo (Ville)\n!news  (Sujet) (Nombre de sujet)\n!itineraire\n!add (nom de la "
+          "commande) (retour de la commande)\n!rem  (nom de la commande)")
 
 
 if __name__ == "__main__":
@@ -60,3 +62,23 @@ if __name__ == "__main__":
 
             itineraire.itineraire()
 
+        elif choix.find("!add") == 0:
+            name = ""
+            attr = ""
+            try:
+                name = choix.split(' ')[1]
+                attr = choix[len(name)+6:]
+                lien.add_lien(name, attr)
+            except IndexError:
+                print("Commande incorrecte => !add (nom de la commande) (ce qu'elle retourne)")
+
+        elif choix.find("!rem") == 0:
+            name = ""
+            try:
+                name = choix.split(' ')[1]
+                lien.rem_lien(name)
+            except IndexError:
+                print("Commande incorrecte => !rem (nom de la commande)")
+
+        else:
+            lien.lien(choix[1:])
