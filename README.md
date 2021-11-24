@@ -7,8 +7,7 @@
 - [x] Module News   : Module googlesearch
 - [x] Module Itinéraire :Module openrouteservice
 - [x] Module de liens : ephec,inginious,tlca etc.... 
-
-- [ ] Liens personnalisés 
+- [x] Liens personnalisés 
 
 
 
