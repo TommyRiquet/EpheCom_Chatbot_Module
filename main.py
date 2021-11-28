@@ -60,6 +60,7 @@ class Chatbot:
 
         elif message.find("!itineraire") == 0:
             itineraire.itineraire()
+            itineraire.calcul()
 
         elif message.find("!add") == 0:
             try:
