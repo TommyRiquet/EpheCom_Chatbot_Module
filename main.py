@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # Python 3.9
 
-import command
-import meteo
-import news
-import itineraire
+import Libs.command as command
+import Libs.meteo as meteo
+import Libs.news as news
+import Libs.itineraire as itineraire
 
 
 class Chatbot:
@@ -16,7 +16,7 @@ class Chatbot:
         self.__command = ''
         self.__attribut1 = ''
         self.__attribut2 = ''
-        self.__attribut3=''
+        self.__attribut3 = ''
 
     def get_command(self, message):
         """
@@ -27,9 +27,9 @@ class Chatbot:
         if message.find('!help') == 0:
             try:
                 self.__attribut1 = message.split(' ')[1]
-                command.help(self.__attribut1)
+                command.get_help(self.__attribut1)
             except(ValueError, IndexError, KeyError):
-                command.help()
+                command.get_help()
 
         if message.find('!meteo') == 0:
             try:
@@ -66,7 +66,8 @@ class Chatbot:
                 self.__attribut3 = message.split(", ")[3]
                 itineraire.itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
             except (ValueError, IndexError, KeyError):
-                print("adresse incorecte (Ex:!itineraire, 38 rue de chaumont 1325 Longueville, 16 rue de basse-biez 1390 grez-doiceau, afficher les etapes)")
+                print("adresse incorecte (Ex:!itineraire, 38 rue de chaumont 1325 Longueville, 16 rue de basse-biez "
+                      "1390 grez-doiceau, afficher les etapes)")
 
         elif message.find("!add") == 0:
             try:
