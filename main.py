@@ -59,7 +59,23 @@ class Chatbot:
                     news.news(self.__attribut1)
 
         elif message.find("!itineraire") == 0:
-            itineraire.itineraire()
+            try:
+                self.__attribut1 = message.split(", ")[1]
+                itineraire.itineraire(self.__attribut1)
+            except (ValueError, IndexError, KeyError):
+                print("adresse incorecte (Ex:!itineraire, 38 rue de chaumont 1325 Longueville, 16 rue de basse-biez 1390 grez-doiceau, afficher les etapes)")
+
+            try:
+                self.__attribut2 = message.split(", ")[2]
+                itineraire.itineraire(self.__attribut2)
+            except (ValueError, IndexError, KeyError):
+                print("adresse incorecte (Ex:!itineraire, 38 rue de chaumont 1325 Longueville, 16 rue de basse-biez 1390 grez-doiceau, afficher les etapes)")
+
+            try:
+                self.__attribut3 = message.split(", ")[3]
+                itineraire.itineraire(self.__attribut3)
+            except (ValueError, IndexError, KeyError):
+                print("adresse incorecte (Ex:!itineraire, 38 rue de chaumont 1325 Longueville, 16 rue de basse-biez 1390 grez-doiceau, afficher les etapes)")
 
         elif message.find("!add") == 0:
             try:
@@ -81,5 +97,3 @@ class Chatbot:
 
 
 chatbot = Chatbot()
-
-
