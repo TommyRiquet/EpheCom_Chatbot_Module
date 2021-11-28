@@ -5,28 +5,27 @@ import requests
 
 def itineraire():
     """
-    Récupere les coordonneés GPS à partir de deux addresses données 
-    Calcul le temps de trajet , ainsi que la durée et les affiche 
+    Récupere les coordonneés GPS à partir de deux addresses données
+    Calcul le temps de trajet , ainsi que la durée et les affiche
     :return:
     """
 
+    # ADDR TO COOORD
+    # https://maps.open-street.com/api/geocoding/?address="+adr+"&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7
 
-    #ADDR TO COOORD
-    #https://maps.open-street.com/api/geocoding/?address="+adr+"&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7
-
-    #ADDRESSE 1
+    # ADDRESSE 1
     addr1 = input("Entrer une addresse : ")
-    url_addr1 = "https://maps.open-street.com/api/geocoding/?address="+addr1+"&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
+    url_addr1 = "https://maps.open-street.com/api/geocoding/?address=" + addr1 + "&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_addr1 = requests.get(url_addr1)
     coord1 = r_addr1.json()
     try:
         lat1 = float(coord1['results'][0]['geometry']['location']['lat'])
         long1 = float(coord1['results'][0]['geometry']['location']['lng'])
-        print(lat1,long1)
+        print(lat1, long1)
     except KeyError:
         print("Erreur lors de la récupération des coordonnées de l'adresse n°1")
 
-    #ADDRESSE 2
+    # ADDRESSE 2
     addr2 = input("Entrer une autre addresse : ")
     url_addr2 = "https://maps.open-street.com/api/geocoding/?address=" + addr2 + "&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_addr2 = requests.get(url_addr2)
@@ -38,33 +37,30 @@ def itineraire():
     except KeyError:
         print("Erreur lors de la récupération des coordonnées de l'adresse n°2")
 
-
-    #COORD TO TIME AND DISTANCE
-    #https://maps.open-street.com/api/route/?origin="+coord1x+","+coord1y+"&destination="+coord2x+","+coord2y+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7
-    url_final = "https://maps.open-street.com/api/route/?origin="+str(lat1)+","+str(long1)+"&destination="+str(lat2)+","+str(long2)+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7"
+    # COORD TO TIME AND DISTANCE
+    # https://maps.open-street.com/api/route/?origin="+coord1x+","+coord1y+"&destination="+coord2x+","+coord2y+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7
+    url_final = "https://maps.open-street.com/api/route/?origin=" + str(lat1) + "," + str(
+        long1) + "&destination=" + str(lat2) + "," + str(long2) + "&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_final = requests.get(url_final)
     data = r_final.json()
     distance = data['total_distance']
     time = data['total_time']
 
-    print("distance en km : "+ str(distance/1000))
+    print("distance en km : " + str(distance / 1000))
 
-    heure = int(time/3600)
-    minutes = int((time%3600)/60)
-    secondes = int((time%3600)%60)
+    heure = int(time / 3600)
+    minutes = int((time % 3600) / 60)
+    secondes = int((time % 3600) % 60)
 
-    print("temp de trajet : "+ str(heure) +"h "+ str(minutes)+"m "+ str(secondes) + "s")
+    print("temp de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s")
 
-    
-    """
-    # Calcul d'un itinéraire a partir de deux coordonnées 
-    coords = ((4.72628927230835, 50.69315719604492), (4.6121757, 50.6658724))  #(long,lat)départ, (long,lat)arrivée
+
+    # Calcul d'un itinéraire a partir de deux coordonnées
+def calcul():
+    coords = ((long1, lat1), (long2, lat2))  #(long,lat)départ, (long,lat)arrivée
     client = openrouteservice.Client(key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
     routes = client.directions(coords)
-
     for i in routes["routes"]:
         for j in i['segments']:
             for k in j['steps']:
                 print(k['instruction'])
-    
-    """
