@@ -4,7 +4,7 @@ import openrouteservice
 import requests
 
 
-def itineraire(adresse1, adresse2, arguments):
+def itineraire(adresse1, adresse2, a ):
     """
     Récupere les coordonneés GPS à partir de deux addresses données
     Calcul le temps de trajet , ainsi que la durée et les affiche
@@ -16,8 +16,7 @@ def itineraire(adresse1, adresse2, arguments):
 
     # ADDRESSE 1
     addr1 = adresse1
-    url_addr1 = "https://maps.open-street.com/api/geocoding/?address=" + addr1 + "&sensor=false&key" \
-                                                                                 "=143323c5ab5dfe15ec89b2bbb320bea7 "
+    url_addr1 = "https://maps.open-street.com/api/geocoding/?address=" + addr1 + "&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_addr1 = requests.get(url_addr1)
     coord1 = r_addr1.json()
     try:
@@ -25,14 +24,11 @@ def itineraire(adresse1, adresse2, arguments):
         long1 = float(coord1['results'][0]['geometry']['location']['lng'])
         print(lat1, long1)
     except KeyError:
-        lat1 = 0
-        long1 = 0
         print("Erreur lors de la récupération des coordonnées de l'adresse n°1")
 
     # ADDRESSE 2
     addr2 = adresse2
-    url_addr2 = "https://maps.open-street.com/api/geocoding/?address=" + addr2 + "&sensor=false&key" \
-                                                                                 "=143323c5ab5dfe15ec89b2bbb320bea7 "
+    url_addr2 = "https://maps.open-street.com/api/geocoding/?address=" + addr2 + "&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_addr2 = requests.get(url_addr2)
     coord2 = r_addr2.json()
     try:
@@ -40,8 +36,6 @@ def itineraire(adresse1, adresse2, arguments):
         long2 = float(coord2['results'][0]['geometry']['location']['lng'])
         print(lat2, long2)
     except KeyError:
-        lat2 = 0
-        long2 = 0
         print("Erreur lors de la récupération des coordonnées de l'adresse n°2")
 
     # COORD TO TIME AND DISTANCE
@@ -62,11 +56,11 @@ def itineraire(adresse1, adresse2, arguments):
     print("temp de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s")
 
     # Calculating a route from two coordinates
-    if arguments == "afficher les etapes":
+    if a == "1":
         coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
         client = openrouteservice.Client(key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
         routes = client.directions(coords)
-    for i in routes["routes"]:
-        for j in i['segments']:
-            for k in j['steps']:
-                print(k['instruction'])
+        for i in routes["routes"]:
+            for j in i['segments']:
+                for k in j['steps']:
+                    print(k['instruction'])
