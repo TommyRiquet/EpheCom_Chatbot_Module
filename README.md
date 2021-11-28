@@ -4,14 +4,12 @@
 
 ## todo  
 - [x] Module Meteo  : API openweathermap
-- [x] Module News   : Module googlesearch
 - [x] Module Itinéraire :Module openrouteservice
-- [x] Module de liens : ephec,inginious,tlca etc.... 
-- [x] Liens personnalisés 
-
-
-
+- [ ] Module News   : Module googlesearch => approfondir la recherche (éviter les doublons)
+- [x] Commandes personnalisables : ephec,inginious,tlca etc.... 
+- [ ] Ajouter de l'orienté object 
+- [ ] Gérer les exceptions
+- [ ] Implémentation dans le noyaux
 
 ## NOTE:  
-Implémentation dans le noyau et utilisation de la DB pour enregistrer les commandes personnalisés 
-
+Faire attention aux exceptions
