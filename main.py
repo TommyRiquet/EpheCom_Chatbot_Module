@@ -16,6 +16,7 @@ class Chatbot:
         self.__command = ''
         self.__attribut1 = ''
         self.__attribut2 = ''
+        self.__attribut3=''
 
     def get_command(self, message):
         """
