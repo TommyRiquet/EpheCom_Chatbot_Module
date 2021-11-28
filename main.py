@@ -61,8 +61,8 @@ class Chatbot:
 
         elif message.find("!itineraire") == 0:
             try:
-                self.__attribut1 = message.split(", ")[1]
-                self.__attribut2 = message.split(", ")[2]
+                self.__attribut1 = message.split(", ")[1].replace(" ","")
+                self.__attribut2 = message.split(", ")[2].replace(" ","")
                 self.__attribut3 = message.split(", ")[3]
                 itineraire.itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
             except (ValueError, IndexError, KeyError):
