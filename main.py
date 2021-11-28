@@ -60,7 +60,7 @@ class Chatbot:
                     news.news(self.__attribut1)
 
         elif message.find("!itineraire") == 0:
-                        try:
+            try:
                 self.__attribut1 = message.split(", ")[1].replace(" ","")
                 self.__attribut2 = message.split(", ")[2].replace(" ","")
                 self.__attribut3 = message.split(", ")[3]
