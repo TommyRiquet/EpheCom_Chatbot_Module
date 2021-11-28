@@ -58,8 +58,7 @@ def itineraire(adresse1, adresse2, arguments):
     # Calculating a route from two coordinates
     if arguments == "afficher les etapes":
         coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
-        client = openrouteservice.Client(
-            key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
+        client = openrouteservice.Client(key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
         routes = client.directions(coords)
     for i in routes["routes"]:
         for j in i['segments']:
