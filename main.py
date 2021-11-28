@@ -1,84 +1,85 @@
 # -*- coding: utf-8 -*-
+# Python 3.9
+
+import command
 import meteo
 import news
 import itineraire
-import lien
 
 
-def affichehelp():
+class Chatbot:
     """
-    Affiche une liste de commandes disponibles
-    :return:
+    Cette classe est un module de Chatbot pour l'application Ephecom
     """
-    print("Commandes disponibles :\n!meteo (Ville)\n!news  (Sujet) (Nombre de sujet)\n!itineraire\n!add (nom de la "
-          "commande) (retour de la commande)\n!rem  (nom de la commande)")
 
+    def __init__(self):
+        self.__command = ''
+        self.__attribut1 = ''
+        self.__attribut2 = ''
 
-if __name__ == "__main__":
-
-    choix = ""
-
-    while choix != '0':
-
-        # Récupération des entrées utilisateurs
-        choix = input()
-
-        # Différents choix possibles
-        if choix.find('!help') == 0:
-            affichehelp()
-
-        elif choix.find('!meteo') == 0:
-
+    def get_command(self, message):
+        """
+        Cette méthode récupere les entrées du chat et vérifie s'il s'agit de commande
+        :param message: le message du chat
+        :return:
+        """
+        if message.find('!help') == 0:
             try:
-                ville = choix.split(' ')[1]
-                meteo.meteo(ville)
+                self.__attribut1 = message.split(' ')[1]
+                command.help(self.__attribut1)
+            except(ValueError, IndexError, KeyError):
+                command.help()
+
+        if message.find('!meteo') == 0:
+            try:
+                self.__attribut1 = message.split(' ')[1]
+                meteo.meteo(self.__attribut1)
             except (ValueError, IndexError, KeyError):
                 print("Ville manquante ou incorrecte (Ex: !meteo Paris)")
 
-        elif choix.find('!news') == 0:
-
-            subject = ""
-            nbr = 0
-            try:
-                array_nbr = [int(nbr) for nbr in choix.split() if nbr.isdigit()]
-                nbr = int(array_nbr[len(array_nbr)-1])
-            except (ValueError, IndexError, KeyError):
-                nbr = 0
+        elif message.find('!news') == 0:
 
             try:
-                subject = choix[5:len(choix)-1]
-                if subject == " " or len(subject) == 0:
+                self.__attribut1 = message[5:len(message) - 1]
+                if self.__attribut1 == " " or len(self.__attribut1) == 0:
                     print("Sujet invalide (Ex :!news IT 2)")
             except (ValueError, IndexError, KeyError):
                 print("Sujet invalide (Ex :!news IT 2)")
 
+            try:
+                array_nbr = [int(nbr) for nbr in message.split() if nbr.isdigit()]
+                self.__attribut2 = int(array_nbr[len(array_nbr) - 1])
+            except (ValueError, IndexError, KeyError):
+                self.__attribut2 = 0
+
             else:
-                if nbr > 0 and nbr is not None and subject is not None:
-                    news.news(subject, nbr)
+                if self.__attribut2 > 0 and self.__attribut2 is not None and self.__attribut1 is not None:
+                    news.news(self.__attribut1, self.__attribut2)
                 else:
-                    news.news(subject)
+                    news.news(self.__attribut1)
 
-        elif choix.find("!itineraire") == 0:
-
+        elif message.find("!itineraire") == 0:
             itineraire.itineraire()
 
-        elif choix.find("!add") == 0:
-            name = ""
-            attr = ""
+        elif message.find("!add") == 0:
             try:
-                name = choix.split(' ')[1]
-                attr = choix[len(name)+6:]
-                lien.add_lien(name, attr)
+                self.__command = message.split(' ')[1]
+                self.__attribut1 = message[len(self.__command) + 6:]
+                command.add_lien(self.__command, self.__attribut1)
             except IndexError:
                 print("Commande incorrecte => !add (nom de la commande) (ce qu'elle retourne)")
 
-        elif choix.find("!rem") == 0:
-            name = ""
+        elif message.find("!rem") == 0:
             try:
-                name = choix.split(' ')[1]
-                lien.rem_lien(name)
+                self.__command = message.split(' ')[1]
+                command.rem_lien(self.__command)
             except IndexError:
                 print("Commande incorrecte => !rem (nom de la commande)")
 
         else:
-            lien.lien(choix[1:])
+            command.lien(message[1:])
+
+
+chatbot = Chatbot()
+
+
