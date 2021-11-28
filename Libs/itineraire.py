@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+
 import openrouteservice
 import requests
 
 
-def itineraire():
+def itineraire(adresse1, adresse2, arguments):
     """
     Récupere les coordonneés GPS à partir de deux addresses données
     Calcul le temps de trajet , ainsi que la durée et les affiche
@@ -14,7 +15,7 @@ def itineraire():
     # https://maps.open-street.com/api/geocoding/?address="+adr+"&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7
 
     # ADDRESSE 1
-    addr1 = input("Entrer une addresse : ")
+    addr1 = adresse1
     url_addr1 = "https://maps.open-street.com/api/geocoding/?address=" + addr1 + "&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_addr1 = requests.get(url_addr1)
     coord1 = r_addr1.json()
@@ -26,7 +27,7 @@ def itineraire():
         print("Erreur lors de la récupération des coordonnées de l'adresse n°1")
 
     # ADDRESSE 2
-    addr2 = input("Entrer une autre addresse : ")
+    addr2 = adresse2
     url_addr2 = "https://maps.open-street.com/api/geocoding/?address=" + addr2 + "&sensor=false&key=143323c5ab5dfe15ec89b2bbb320bea7"
     r_addr2 = requests.get(url_addr2)
     coord2 = r_addr2.json()
@@ -54,11 +55,12 @@ def itineraire():
 
     print("temp de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s")
 
-
-    # Calcul d'un itinéraire a partir de deux coordonnées
-    coords = ((long1, lat1), (long2, lat2))  #(long,lat)départ, (long,lat)arrivée
-    client = openrouteservice.Client(key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
-    routes = client.directions(coords)
+    # Calculating a route from two coordinates
+    if arguments == "afficher les etapes":
+        coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
+        client = openrouteservice.Client(
+            key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
+        routes = client.directions(coords)
     for i in routes["routes"]:
         for j in i['segments']:
             for k in j['steps']:
