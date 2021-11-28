@@ -4,7 +4,7 @@ import openrouteservice
 import requests
 
 
-def itineraire(adresse1, adresse2, a ):
+def itineraire(adresse1, adresse2, arg):
     """
     Récupere les coordonneés GPS à partir de deux addresses données
     Calcul le temps de trajet , ainsi que la durée et les affiche
@@ -22,7 +22,6 @@ def itineraire(adresse1, adresse2, a ):
     try:
         lat1 = float(coord1['results'][0]['geometry']['location']['lat'])
         long1 = float(coord1['results'][0]['geometry']['location']['lng'])
-        print(lat1, long1)
     except KeyError:
         print("Erreur lors de la récupération des coordonnées de l'adresse n°1")
 
@@ -34,7 +33,6 @@ def itineraire(adresse1, adresse2, a ):
     try:
         lat2 = float(coord2['results'][0]['geometry']['location']['lat'])
         long2 = float(coord2['results'][0]['geometry']['location']['lng'])
-        print(lat2, long2)
     except KeyError:
         print("Erreur lors de la récupération des coordonnées de l'adresse n°2")
 
@@ -56,7 +54,7 @@ def itineraire(adresse1, adresse2, a ):
     print("temp de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s")
 
     # Calculating a route from two coordinates
-    if a == "1":
+    if arg == "route":
         coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
         client = openrouteservice.Client(key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
         routes = client.directions(coords)

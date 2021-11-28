@@ -27,12 +27,11 @@ def get_help(command=''):
         print(return_command)
 
 
-def add_lien(command,attr):
+def add_lien(command, attr):
     if attr.find('http') == 0:
         liens[command] = attr
     else:
         list_commands[command] = attr
-    print("Commande '"+command+"' ajouté avec succès")
 
 
 def rem_lien(command):
