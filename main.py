@@ -97,6 +97,3 @@ class Chatbot:
 chatbot = Chatbot()
 
 chatbot.get_command('')
-
-
-
