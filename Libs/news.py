@@ -10,5 +10,10 @@ def news(query, nbr_query=1):
     :param nbr_query: Le nombre de recherche
     :return:
     """
-    for i in search(query, tld='com', lang='fr', num=nbr_query, stop=nbr_query, pause=2):
-        print(i)
+    response = ''
+
+    # Recuperation des recherches
+    for liens in search(query, tld='com', lang='fr', num=nbr_query, stop=nbr_query, pause=2):
+        response += '\n'+liens
+
+    return response

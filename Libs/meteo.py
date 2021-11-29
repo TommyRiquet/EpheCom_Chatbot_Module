@@ -22,9 +22,12 @@ def meteo(ville):
     temp_max = data['main']['temp_max']
     humidite = data['main']['humidity']
     description_temps = data['weather'][0]['description']
+    ville = data['name']
+    pays = data['sys']['country']
 
     # AFFICHAGE
-    print(
-        "temperature moyenne:  {}".format(temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)")
-    print("Taux d'humidite : {}".format(humidite) + "%")
-    print("Conditions climatiques : {}".format(description_temps))
+    response = "Station météo de " + ville + " , " + pays + "\ntemperature moyenne:  {}".format(temp) + "° (min :{}"\
+        .format(temp_min) + "°/max : {}".format(temp_max) + "°)\nTaux d'humidite : {}".format(humidite) + \
+               "%\nConditions climatiques : {}".format(description_temps)
+
+    print(response)

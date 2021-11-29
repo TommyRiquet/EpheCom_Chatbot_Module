@@ -25,28 +25,32 @@ def get_help(command=''):
 
         for i in liens:
             return_command += '\n!'+i
-        print(return_command)
+        return return_command
 
     else:
         return_command += '!'+command + ' ' + list_commands['!'+command]
-        print(return_command)
+        return return_command
 
 
 def add_lien(command, attr):
     if attr.find('http') == 0:
         liens[command] = attr
+        return 'Site Web ajouté avec succes'
     else:
         list_commands[command] = attr
+        return 'Commande ajoutée avec succes'
 
 
 def rem_lien(command):
     for i in liens:
         if i == command:
             del liens[command]
+            return 'Site Web supprimée avec succes'
 
     for i in list_commands:
         if i == command:
             del list_commands[command]
+            return 'Commande supprimée avec succes'
 
 
 def lien(command):
@@ -54,12 +58,13 @@ def lien(command):
         for i in liens:
             if i == command:
                 webbrowser.open(liens[command])
+                return 'Site Web ' + i + ' ouvert'
     except KeyError:
         pass
 
     try:
         for i in list_commands:
             if i == command:
-                print(list_commands[command])
+                return list_commands[command]
     except KeyError:
         pass

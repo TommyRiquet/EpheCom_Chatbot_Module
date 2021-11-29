@@ -7,6 +7,13 @@ import Libs.news as news
 import Libs.itineraire as itineraire
 
 
+def send_message(message):
+    """
+    Renvoie la valeur de retour
+    """
+    print(message)
+
+
 class Chatbot:
     """
     Cette classe est un module de Chatbot pour l'application Ephecom
@@ -27,25 +34,25 @@ class Chatbot:
         if message.find('!help') == 0:
             try:
                 self.__attribut1 = message.split(' ')[1]
-                command.get_help(self.__attribut1)
+                return command.get_help(self.__attribut1)
             except(ValueError, IndexError, KeyError):
-                command.get_help()
+                return command.get_help()
 
         if message.find('!meteo') == 0:
             try:
                 self.__attribut1 = message.split(' ')[1]
-                meteo.meteo(self.__attribut1)
+                return meteo.meteo(self.__attribut1)
             except (ValueError, IndexError, KeyError):
-                print("Ville manquante ou incorrecte (Ex: !meteo Paris)")
+                return "Ville manquante ou incorrecte (Ex: !meteo Paris)"
 
         elif message.find('!news') == 0:
 
             try:
                 self.__attribut1 = message[5:len(message) - 1]
                 if self.__attribut1 == " " or len(self.__attribut1) == 0:
-                    print("Sujet invalide (Ex :!news IT 2)")
+                    return "Sujet invalide (Ex :!news IT 2)"
             except (ValueError, IndexError, KeyError):
-                print("Sujet invalide (Ex :!news IT 2)")
+                return "Sujet invalide (Ex :!news IT 2)"
 
             try:
                 array_nbr = [int(nbr) for nbr in message.split() if nbr.isdigit()]
@@ -55,40 +62,39 @@ class Chatbot:
 
             else:
                 if self.__attribut2 > 0 and self.__attribut2 is not None and self.__attribut1 is not None:
-                    news.news(self.__attribut1, self.__attribut2)
+                    return news.news(self.__attribut1, self.__attribut2)
                 else:
-                    news.news(self.__attribut1)
+                    return news.news(self.__attribut1)
 
         elif message.find("!itineraire") == 0:
             try:
                 self.__attribut1 = message.split("/")[0]
                 self.__attribut1 = self.__attribut1[12:]
-
                 self.__attribut2 = message.split("/")[1]
                 try:
                     self.__attribut3 = message.split("/")[2]
                 except (ValueError, IndexError, KeyError):
                     self.__attribut3 = 0
 
-                itineraire.itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
+                return itineraire.itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
             except (ValueError, IndexError, KeyError):
-                print("adresse incorecte (Ex:!itineraire 38 rue de chaumont 1325 Longueville / 16 rue de basse-biez "
-                      "1390 grez-doiceau / route)")
+                return "adresse incorecte (Ex:!itineraire 38 rue de chaumont 1325 Longueville / 16 rue de basse-biez " \
+                       "1390 grez-doiceau /route) "
 
         elif message.find("!add") == 0:
             try:
                 self.__command = message.split(' ')[1]
                 self.__attribut1 = message[len(self.__command) + 6:]
-                command.add_lien(self.__command, self.__attribut1)
+                return command.add_lien(self.__command, self.__attribut1)
             except IndexError:
-                print("Commande incorrecte => !add (nom de la commande) (ce qu'elle retourne)")
+                return "Commande incorrecte => !add (nom de la commande) (ce qu'elle retourne)"
 
         elif message.find("!rem") == 0:
             try:
                 self.__command = message.split(' ')[1]
-                command.rem_lien(self.__command)
+                return command.rem_lien(self.__command)
             except IndexError:
-                print("Commande incorrecte => !rem (nom de la commande)")
+                return "Commande incorrecte => !rem (nom de la commande)"
 
         else:
             command.lien(message[1:])
@@ -96,7 +102,9 @@ class Chatbot:
 
 chatbot = Chatbot()
 
-chatbot.get_command('')
 
+message = '!'
 
+if message[0] == '!':
+    send_message(chatbot.get_command(message))
 
