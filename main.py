@@ -27,9 +27,9 @@ class Chatbot:
 
     def get_command(self, message):
         """
-        Cette méthode récupere les entrées du chat et vérifie s'il s'agit de commande
-        :param message: le message du chat
-        :return:
+        Cette méthode reçois les commandes du chat et va appeller les différents modules, en leurs passant les arguments
+        :param message: la commande de l'utilisateur
+        :return response : la réponse à la commande de l'utilisateur
         """
 
         # HELP
@@ -112,7 +112,7 @@ class Chatbot:
 chatbot = Chatbot()
 
 
-message = '!meteo Paris'
+message = '!'
 
 if message[0] == '!':
     send_message(chatbot.get_command(message))

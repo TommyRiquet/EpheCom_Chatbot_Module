@@ -9,7 +9,7 @@ class Meteo:
         Utilisation de l'API de OpenWeatherMap
         https://openweathermap.org/current#data
         Récupération des données et affichage
-        :return:
+        :return response : la réponse de l'API
         """
 
         url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
