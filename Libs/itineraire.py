@@ -3,7 +3,7 @@
 import openrouteservice
 import requests
 
-class itineraire:
+class Itineraire:
     def get_itineraire(adresse1, adresse2, arg):
         """
         Récupere les coordonneés GPS à partir de deux addresses données
