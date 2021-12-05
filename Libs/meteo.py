@@ -4,12 +4,19 @@ import requests
 
 
 class Meteo:
+    """
+        Cette classe représente un module de Météo pour le Chatbot
+
+        Author : T. Riquet
+        Date : December 2021
+    """
     def get_meteo(self, ville):
         """
-        Utilisation de l'API de OpenWeatherMap
-        https://openweathermap.org/current#data
-        Récupération des données et affichage
-        :return response : la réponse de l'API
+        Cette méthode renvoie les informations sur la météo d'une ville
+
+        PRE : ville est un str
+        POST : retourne les informations sur la ville donnée en argument
+        RAISES : /
         """
 
         url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
@@ -26,9 +33,9 @@ class Meteo:
         ville = data['name']
         pays = data['sys']['country']
 
-        # AFFICHAGE
-        response = "Station météo de " + ville + " , " + pays + "\ntemperature moyenne:  {}".format(temp) + "° (min :{}" \
-            .format(temp_min) + "°/max : {}".format(temp_max) + "°)\nTaux d'humidite : {}".format(humidite) + \
-                   "%\nConditions climatiques : {}".format(description_temps)
+        # CREATION DE LA REPONSE
+        response = "Station météo de " + ville + " , " + pays + "\ntemperature moyenne:  {}".format(
+            temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)\nTaux d'humidite : {}".format(
+            humidite) + "%\nConditions climatiques : {}".format(description_temps)
 
         return response

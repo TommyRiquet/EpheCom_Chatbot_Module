@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # Python 3.9
+import openrouteservice.exceptions
 
 import Libs.command as command
 from Libs.meteo import Meteo
-from Libs.news import News as news
-import Libs.itineraire as itineraire
+from Libs.news import News
+from Libs.itineraire import Itineraire
 
 
 def send_message(reponse):
@@ -16,7 +17,10 @@ def send_message(reponse):
 
 class Chatbot:
     """
-    Cette classe est un module de Chatbot pour l'application Ephecom
+    Cette classe représente un module de Chatbot pour l'application Ephecom
+
+    Author : T. Riquet,Q. Laruelle,S. Dziemianko
+    Date : December 2021
     """
 
     def __init__(self):
@@ -28,8 +32,15 @@ class Chatbot:
     def get_command(self, message):
         """
         Cette méthode reçois les commandes du chat et va appeller les différents modules, en leurs passant les arguments
-        :param message: la commande de l'utilisateur
-        :return response : la réponse à la commande de l'utilisateur
+
+        PRE : message est un str
+        POST : retourne la réponse à la commande
+        RAISES :
+        -ValueError : lorsque l'ont introduit de mauvais arguments
+        -IndexError : Lors des splits , si l'argument est manquant
+        -KeyError : Lorsque les APIs utilisées ont atteint la limite journalière autorisée
+        -openrouteservice.exceptions.ApiError : Erreur API lors d'un calcul d'itinéraire impossible
+
         """
 
         # HELP
@@ -44,8 +55,7 @@ class Chatbot:
         if message.find('!meteo') == 0:
             try:
                 self.__attribut1 = message.split(' ')[1]
-                meteo = Meteo()
-                return meteo.get_meteo(self.__attribut1)
+                return Meteo().get_meteo(self.__attribut1)
             except (ValueError, IndexError, KeyError):
                 return "Ville manquante ou incorrecte (Ex: !meteo Paris)"
 
@@ -67,9 +77,9 @@ class Chatbot:
 
             else:
                 if self.__attribut2 > 0 and self.__attribut2 is not None and self.__attribut1 is not None:
-                    return news().get_news(self.__attribut1, self.__attribut2)
+                    return News().get_news(self.__attribut1, self.__attribut2)
                 else:
-                    return news().get_news(self.__attribut1)
+                    return News().get_news(self.__attribut1)
 
         # ITINERAIRE
         elif message.find("!itineraire") == 0:
@@ -82,10 +92,12 @@ class Chatbot:
                 except (ValueError, IndexError, KeyError):
                     self.__attribut3 = 0
 
-                return itineraire.get_itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
+                return Itineraire().get_itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
             except (ValueError, IndexError, KeyError):
                 return "adresse incorecte (Ex:!itineraire 38 rue de chaumont 1325 Longueville / 16 rue de basse-biez " \
                        "1390 grez-doiceau /route) "
+            except openrouteservice.exceptions.ApiError:
+                return 'Calcul d\'itinéraire impossible entre "'+self.__attribut1+'" et "'+self.__attribut2+'"'
 
         # ADD
         elif message.find("!add") == 0:
@@ -112,7 +124,10 @@ class Chatbot:
 chatbot = Chatbot()
 
 
-message = '!news nouvelle decouvertes archeologiques 20'
+message = '!news'
 
 if message[0] == '!':
-    send_message(chatbot.get_command(message))
+    response = chatbot.get_command(message)
+    if response is not None:
+        send_message(response)
+        

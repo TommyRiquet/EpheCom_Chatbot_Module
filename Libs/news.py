@@ -1,16 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from googlesearch import search             #import google
+from googlesearch import search             # Import Google
 from urllib.parse import urlparse
 
+
 class News:
+    """
+        Cette classe représente un module de News pour le Chatbot
+
+        Author : T. Riquet,S. Dziemianko
+        Date : December 2021
+    """
 
     def get_news(self, query, nbr_query=1):
         """
-        Recherche des résultats sur le web avec l'aide de la librairie Google
-        :param query: Le sujet de la recherche
-        :param nbr_query: Le nombre de recherche
-        :return:
+        Cette methode recherche des résultats sur le web avec l'aide de la librairie Google
+
+        PRE : query est un str , nbr_query est un entier optionnel
+        POST : retourne les résultats de la cherche Google
+        RAISES : /
+
         """
         link_increment = 0
         site = []

@@ -11,8 +11,7 @@ list_commands = {"!meteo": "(Nom de la ville) : Affiche la meteo d'une ville ",
                                 "addresses, et peut afficher la route à suivre avec l'argument '/route'",
                  "!add": "(Nom de le commande) (Retour de la commande ) : Ex:'!add portail "
                          "https://portail.ephec.com', '!add salut bonjour comment allez vous ?'",
-                 "!rem": "(Nom de la commande) : Supprime la commande personnalisé en fonction de sa commande",
-                 "\nLiens Personnalisés :": ''
+                 "!rem": "(Nom de la commande) : Supprime la commande personnalisé en fonction de sa commande"
                  }
 
 
@@ -21,24 +20,24 @@ def get_help(command=''):
     if command == '':
 
         for command in list_commands:
-            return_command += '\n'+command + " " + list_commands[command]
+            return_command += '\n' + command + " " + list_commands[command]
 
         for i in liens:
-            return_command += '\n!'+i
+            return_command += '\n!' + i
         return return_command
 
     else:
-        return_command += '!'+command + ' ' + list_commands['!'+command]
+        return_command += '!' + command + ' ' + list_commands['!' + command]
         return return_command
 
 
 def add_lien(command, attr):
     if attr.find('http') == 0:
         liens[command] = attr
-        return 'Site Web ajouté avec succes'
+        return 'Site Web "' + command + '" ajouté avec succes'
     else:
         list_commands[command] = attr
-        return 'Commande ajoutée avec succes'
+        return 'Commande "' + command + '" ajoutée avec succes'
 
 
 def rem_lien(command):
