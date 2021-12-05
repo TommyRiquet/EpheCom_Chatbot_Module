@@ -2,16 +2,16 @@
 # Python 3.9
 
 import Libs.command as command
-import Libs.meteo as meteo
+from Libs.meteo import Meteo
 import Libs.news as news
 import Libs.itineraire as itineraire
 
 
-def send_message(message):
+def send_message(reponse):
     """
     Renvoie la valeur de retour
     """
-    print(message)
+    print(reponse)
 
 
 class Chatbot:
@@ -31,6 +31,8 @@ class Chatbot:
         :param message: le message du chat
         :return:
         """
+
+        # HELP
         if message.find('!help') == 0:
             try:
                 self.__attribut1 = message.split(' ')[1]
@@ -38,13 +40,16 @@ class Chatbot:
             except(ValueError, IndexError, KeyError):
                 return command.get_help()
 
+        # METEO
         if message.find('!meteo') == 0:
             try:
                 self.__attribut1 = message.split(' ')[1]
-                return meteo.meteo(self.__attribut1)
+                meteo = Meteo()
+                return meteo.get_meteo(self.__attribut1)
             except (ValueError, IndexError, KeyError):
                 return "Ville manquante ou incorrecte (Ex: !meteo Paris)"
 
+        # NEWS
         elif message.find('!news') == 0:
 
             try:
@@ -66,6 +71,7 @@ class Chatbot:
                 else:
                     return news.news(self.__attribut1)
 
+        # ITINERAIRE
         elif message.find("!itineraire") == 0:
             try:
                 self.__attribut1 = message.split("/")[0]
@@ -81,6 +87,7 @@ class Chatbot:
                 return "adresse incorecte (Ex:!itineraire 38 rue de chaumont 1325 Longueville / 16 rue de basse-biez " \
                        "1390 grez-doiceau /route) "
 
+        # ADD
         elif message.find("!add") == 0:
             try:
                 self.__command = message.split(' ')[1]
@@ -89,6 +96,7 @@ class Chatbot:
             except IndexError:
                 return "Commande incorrecte => !add (nom de la commande) (ce qu'elle retourne)"
 
+        # REM
         elif message.find("!rem") == 0:
             try:
                 self.__command = message.split(' ')[1]
@@ -96,6 +104,7 @@ class Chatbot:
             except IndexError:
                 return "Commande incorrecte => !rem (nom de la commande)"
 
+        # OTHER COMMAND
         else:
             command.lien(message[1:])
 
@@ -103,7 +112,7 @@ class Chatbot:
 chatbot = Chatbot()
 
 
-message = '!'
+message = '!meteo Paris'
 
 if message[0] == '!':
     send_message(chatbot.get_command(message))
