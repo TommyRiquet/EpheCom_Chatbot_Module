@@ -13,5 +13,5 @@
 
 ## NOTE:  
 Faire attention aux exceptions
-faire une liste des commandes les plus utilisées lors de l'écriture du  point d'exclamation
-Error Itineraire : plusieurs continents
+Faire une liste des commandes les plus utilisées lors de l'écriture du  point d'exclamation
+
