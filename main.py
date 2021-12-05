@@ -112,7 +112,7 @@ class Chatbot:
 chatbot = Chatbot()
 
 
-message = '!meteo Paris'
+message = '!'
 
 if message[0] == '!':
     send_message(chatbot.get_command(message))
