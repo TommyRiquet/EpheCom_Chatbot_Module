@@ -3,7 +3,7 @@
 
 import Libs.command as command
 from Libs.meteo import Meteo
-import Libs.news as news
+from Libs.news import News as news
 import Libs.itineraire as itineraire
 
 
@@ -67,9 +67,9 @@ class Chatbot:
 
             else:
                 if self.__attribut2 > 0 and self.__attribut2 is not None and self.__attribut1 is not None:
-                    return news.news(self.__attribut1, self.__attribut2)
+                    return news().get_news(self.__attribut1, self.__attribut2)
                 else:
-                    return news.news(self.__attribut1)
+                    return news().get_news(self.__attribut1)
 
         # ITINERAIRE
         elif message.find("!itineraire") == 0:
@@ -112,7 +112,7 @@ class Chatbot:
 chatbot = Chatbot()
 
 
-message = '!'
+message = '!news nouvelle decouvertes archeologiques 20'
 
 if message[0] == '!':
     send_message(chatbot.get_command(message))
