@@ -7,8 +7,8 @@
 - [x] Module Itinéraire :Module openrouteservice
 - [ ] Module News   : Module googlesearch => approfondir la recherche (éviter les doublons)
 - [x] Commandes personnalisables : ephec,inginious,tlca etc.... 
-- [ ] Ajouter de l'orienté object 
-- [ ] Gérer les exceptions
+- [x] Ajouter de l'orienté object 
+- [x] Gérer les exceptions
 - [ ] Implémentation dans le noyaux
 
 ## NOTE:  
