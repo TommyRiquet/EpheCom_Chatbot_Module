@@ -92,8 +92,7 @@ class Chatbot:
 
                 return Itineraire().get_itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
             except (ValueError, IndexError, KeyError):
-                return "adresse incorecte (Ex:!itineraire 38 rue de chaumont 1325 Longueville / 16 rue de basse-biez " \
-                       "1390 grez-doiceau /route) "
+                return "adresse incorecte (Ex:!itineraire Rue de l'example 123 / Rue de l'HTML 456 /route )"
 
         # ADD
         elif message.find("!add") == 0:
@@ -119,9 +118,7 @@ class Chatbot:
 
 chatbot = Chatbot()
 
-# itineraire Rue notre Dame 65 Perwez / 28 Broadman Pkwy New York /route
-
-message = '!test'
+message = '!'
 
 if message[0] == '!':
     response = chatbot.get_command(message)

@@ -28,7 +28,7 @@ class Addresse:
         long = 0
 
         url_addr = "https://maps.open-street.com/api/geocoding/?address=" + addresse + "&sensor=false&key" \
-                                                                                       "=9744eec549f1c82b18af8a10f26d1489"
+                                                                                       "=143323c5ab5dfe15ec89b2bbb320bea7"
         r_addr = requests.get(url_addr)
         coord = r_addr.json()
 
@@ -79,14 +79,14 @@ class Itineraire:
         # https://maps.open-street.com/api/route/?origin="+coord1x+","+coord1y+"&destination="+coord2x+","+coord2y+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7
         url_final = "https://maps.open-street.com/api/route/?origin=" + str(lat1) + "," + str(
             long1) + "&destination=" + str(lat2) + "," + str(
-            long2) + "&mode=driving&key=9744eec549f1c82b18af8a10f26d1489"
+            long2) + "&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7"
         r_final = requests.get(url_final)
         data = r_final.json()
         distance = data['total_distance']
         time = data['total_time']
 
         # CREATION DE LA REPONSE
-        response = "\ndistance en km : " + str(distance / 1000)
+        response = "distance en km : " + str(distance / 1000)
         heure = int(time / 3600)
         minutes = int((time % 3600) / 60)
         secondes = int((time % 3600) % 60)
