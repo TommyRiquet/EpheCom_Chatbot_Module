@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # Python 3.9
-import openrouteservice.exceptions
 
 import Libs.command as command
 from Libs.meteo import Meteo
@@ -39,7 +38,6 @@ class Chatbot:
         -ValueError : lorsque l'ont introduit de mauvais arguments
         -IndexError : Lors des splits , si l'argument est manquant
         -KeyError : Lorsque les APIs utilisées ont atteint la limite journalière autorisée
-        -openrouteservice.exceptions.ApiError : Erreur API lors d'un calcul d'itinéraire impossible
 
         """
 
@@ -96,8 +94,6 @@ class Chatbot:
             except (ValueError, IndexError, KeyError):
                 return "adresse incorecte (Ex:!itineraire 38 rue de chaumont 1325 Longueville / 16 rue de basse-biez " \
                        "1390 grez-doiceau /route) "
-            except openrouteservice.exceptions.ApiError:
-                return 'Calcul d\'itinéraire impossible entre "'+self.__attribut1+'" et "'+self.__attribut2+'"'
 
         # ADD
         elif message.find("!add") == 0:
@@ -124,7 +120,7 @@ class Chatbot:
 chatbot = Chatbot()
 
 
-message = '!news'
+message = '!itineraire Rue notre Dame 65 Perwez / 28 Broadman Pkwy New York /route'
 
 if message[0] == '!':
     response = chatbot.get_command(message)

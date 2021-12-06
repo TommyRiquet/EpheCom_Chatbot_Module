@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import openrouteservice
+import openrouteservice.exceptions
 import requests
 
 
@@ -17,7 +18,10 @@ class Addresse:
 
                 PRE : adresse est un str
                 POST : retourne les coordonées de l'addresse
-                RAISE : KeyError : lorsque la limite journalière autorisé par la clé API est atteinte
+                RAISE :
+                -KeyError : lorsque la limite journalière autorisé par la clé API est atteinte
+                -openrouteservice.exceptions.ApiError : Erreur API lors d'un calcul d'itinéraire impossible
+
         """
 
         lat = 0
@@ -89,14 +93,17 @@ class Itineraire:
         response += "\ntemps de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s"
 
         # AJOUT DES ETAPES SI /route
-        if arg == "route":
-            coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
-            client = openrouteservice.Client(
-                key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
-            routes = client.directions(coords)
-            for i in routes["routes"]:
-                for j in i['segments']:
-                    for k in j['steps']:
-                        response += ("\n" + k['instruction'])
+        try:
+            if arg == "route":
+                coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
+                client = openrouteservice.Client(
+                    key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
+                routes = client.directions(coords)
+                for i in routes["routes"]:
+                    for j in i['segments']:
+                        for k in j['steps']:
+                            response += ("\n" + k['instruction'])
+        except openrouteservice.exceptions.ApiError:
+            return 'Impossible de calculer l\'itinéraire'
 
         return response
