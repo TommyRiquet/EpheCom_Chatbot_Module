@@ -3,6 +3,7 @@ import unittest
 
 chatbot = Chatbot()
 
+
 class ChatBotTest(unittest.TestCase):
     """
        Class de test pour la class Chatbot en utilisant la framework unittest

@@ -10,6 +10,13 @@ class Meteo:
         Author : T. Riquet
         Date : December 2021
     """
+    def API_Call(self, ville):
+        url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
+                                                                                    "beb97c1ce62559bba4e81e28de8be095"
+        r_weather = requests.get(url_weather)
+        data = r_weather.json()
+        return data
+
     def get_meteo(self, ville):
         """
         Cette méthode renvoie les informations sur la météo d'une ville
@@ -18,11 +25,7 @@ class Meteo:
         POST : retourne les informations sur la ville donnée en argument
         RAISES : /
         """
-
-        url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
-                                                                                    "beb97c1ce62559bba4e81e28de8be095"
-        r_weather = requests.get(url_weather)
-        data = r_weather.json()
+        data = self.API_Call(ville)
 
         # RECUPERATION DES DONNEES
         temp = data['main']['temp']

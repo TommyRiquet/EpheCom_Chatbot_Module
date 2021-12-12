@@ -41,6 +41,27 @@ class Addresse:
             pass
         return [lat, long]
 
+    def get_route(self, long1, lat1, long2, lat2):
+        """
+        Cette méthode calcul les étapes de l'itinéraire à partir de coordonnées GPS
+
+        PRE : long1,lat1,long2,lat2 sont des entiers
+        POST : renvoie les étapes si possible
+        RAISES : openroute.exceptions.ApiError : Si le calcul de l'itinéraire est impossible : renvoie 0
+        """
+        response = ""
+        try:
+            coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
+            client = openrouteservice.Client(
+                key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
+            routes = client.directions(coords)
+            for i in routes["routes"]:
+                for j in i['segments']:
+                    for k in j['steps']:
+                        response += ("\n" + k['instruction'])
+        except openrouteservice.exceptions.ApiError:
+            return 0
+
 
 class Itineraire:
     """
@@ -92,18 +113,11 @@ class Itineraire:
         secondes = int((time % 3600) % 60)
         response += "\ntemps de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s"
 
-        # AJOUT DES ETAPES SI /route
-        try:
-            if arg == "route":
-                coords = ((long1, lat1), (long2, lat2))  # (long,lat)départ, (long,lat)arrivée
-                client = openrouteservice.Client(
-                    key='5b3ce3597851110001cf624842459ea605184a62ac2aa7283c08ccbf')  # Clef personnelle
-                routes = client.directions(coords)
-                for i in routes["routes"]:
-                    for j in i['segments']:
-                        for k in j['steps']:
-                            response += ("\n" + k['instruction'])
-        except openrouteservice.exceptions.ApiError:
-            return 'Impossible de calculer l\'itinéraire'
+        if arg == '/route':
+            route = Addresse().get_route(long1, lat1, long2, lat2)
+            if route != 0:
+                response += route
+            elif route == 0:
+                return 'Impossible de calculer l\'itinéraire'
 
         return response
