@@ -7,7 +7,7 @@ import requests
 
 class Addresse:
     """
-        Cette classe représente une addresse utilisé dans la classe Itineraire
+        Cette classe représente une addresse utilisée dans la classe Itineraire
 
         Author : T. Riquet,Q. Laruelle
         Date : December 2021
@@ -19,7 +19,7 @@ class Addresse:
                 PRE : adresse est un str
                 POST : retourne les coordonées de l'addresse
                 RAISE :
-                -KeyError : lorsque la limite journalière autorisé par la clé API est atteinte
+                -KeyError : lorsque la limite journalière autorisée par la clé API est atteinte
                 -openrouteservice.exceptions.ApiError : Erreur API lors d'un calcul d'itinéraire impossible
 
         """
@@ -43,7 +43,7 @@ class Addresse:
 
     def get_route(self, long1, lat1, long2, lat2):
         """
-        Cette méthode calcul les étapes de l'itinéraire à partir de coordonnées GPS
+        Cette méthode calcule les étapes de l'itinéraire à partir de coordonnées GPS
 
         PRE : long1,lat1,long2,lat2 sont des entiers
         POST : renvoie les étapes si possible

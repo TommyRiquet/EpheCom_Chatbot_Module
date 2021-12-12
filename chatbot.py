@@ -81,7 +81,7 @@ class Chatbot:
 
                 return Itineraire().get_itineraire(self.__attribut1, self.__attribut2, self.__attribut3)
             except (ValueError, IndexError, KeyError):
-                return "adresse incorecte (Ex:!itineraire Rue de l'example 123 / Rue de l'HTML 456 /route )"
+                return "adresse incorrecte (Ex:!itineraire Rue de l'example 123 / Rue de l'HTML 456 /route )"
 
         elif com == 'add':
             try:
@@ -103,7 +103,7 @@ class Chatbot:
 
     def get_command(self, message):
         """
-        Cette méthode reçois les commandes du chat et va appeller les différents modules, en leurs passant les arguments
+        Cette méthode reçoit les commandes du chat et va appeller les différents modules, en leurs passant les arguments
 
         PRE : message est un str
         POST : retourne la réponse à la commande

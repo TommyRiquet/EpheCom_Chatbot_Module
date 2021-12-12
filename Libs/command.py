@@ -1,7 +1,7 @@
 import webbrowser
 
 """
-    Cette module est utilisé pour les commandes du chatbot
+    Ce module est utilisé pour les commandes du chatbot
 
     Author : T. Riquet
     Date : December 2021
@@ -13,12 +13,12 @@ liens = {"ephec": "https://portail.ephec.be/",
 
 list_commands = {"meteo": "(Nom de la ville) : Affiche la meteo d'une ville ",
                  "news": "(Sujet recheché) (Nombre d'articles à rechercher) : Recherche des articles sur Google à "
-                          "partir d'un sujet et d'un nombre d'artciles à rechercher",
-                 "itineraire": "(Addresse 1) / (Addresse 2) /route : Calcul la durée et la distance entre deux "
+                          "partir d'un sujet et d'un nombre d'articles à rechercher",
+                 "itineraire": "(Addresse 1) / (Addresse 2) /route : Calcule la durée et la distance entre deux "
                                 "addresses, et peut afficher la route à suivre avec l'argument '/route'",
                  "add": "(Nom de le commande) (Retour de la commande ) : Ex:'!add portail "
                          "https://portail.ephec.com', '!add salut bonjour comment allez vous ?'",
-                 "rem": "(Nom de la commande) : Supprime la commande personnalisé en fonction de sa commande"
+                 "rem": "(Nom de la commande) : Supprime la commande personnalisée en fonction de sa commande"
                  }
 
 
