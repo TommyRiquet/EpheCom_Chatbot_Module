@@ -11,7 +11,7 @@ class Chatbot:
     """
     Cette classe représente un module de Chatbot pour l'application Ephecom
 
-    Author : T. Riquet,Q. Laruelle,S. Dziemianko
+    Author : T. Riquet, Q. Laruelle, S. Dziemianko
     Date : December 2021
     """
 
@@ -30,11 +30,11 @@ class Chatbot:
         """
         Cette classe appelle les différents modules et renvoie la réponse
 
-        PRE : com est la commande utilisé par l'utilisateur , et message contient les arguments(optionnel)
+        PRE : com est la commande utilisée par l'utilisateur et message contient les arguments(optionnel)
         POST : renvoie la réponse du module correspondant
         RAISES :
         -ValueError : lorsque l'ont introduit de mauvais arguments
-        -IndexError : Lors des splits , si l'argument est manquant
+        -IndexError : Lors des splits, si l'argument est manquant
         -KeyError : Lorsque les APIs utilisées ont atteint la limite journalière autorisée
         """
 
@@ -103,7 +103,7 @@ class Chatbot:
 
     def get_command(self, message):
         """
-        Cette méthode reçois les commandes du chat et va appeller les différents modules, en leurs passant les arguments
+        Cette méthode reçoit les commandes du chat et va appeller les différents modules, en leur passant les arguments
 
         PRE : message est un str
         POST : retourne la réponse à la commande

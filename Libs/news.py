@@ -16,7 +16,7 @@ class News:
         """
         Cette methode recherche des résultats sur le web avec l'aide de la librairie Google
 
-        PRE : query est un str , nbr_query est un entier optionnel
+        PRE : query est un str, nbr_query est un entier optionnel
         POST : retourne les résultats de la cherche Google
         RAISES : /
 

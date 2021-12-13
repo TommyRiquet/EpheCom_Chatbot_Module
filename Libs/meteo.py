@@ -11,6 +11,13 @@ class Meteo:
         Date : December 2021
     """
     def API_Call(self, ville):
+        """
+               Cette méthode appelle l'API en utilisant l'argument ville
+
+               PRE : ville est un str
+               POST : retourne les informations météo de la ville
+               RAISES : /
+        """
         url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + ville + "&units=metric&lang=fr&APPID=" \
                                                                                     "beb97c1ce62559bba4e81e28de8be095"
         r_weather = requests.get(url_weather)

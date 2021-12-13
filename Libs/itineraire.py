@@ -9,9 +9,10 @@ class Addresse:
     """
         Cette classe représente une addresse utilisé dans la classe Itineraire
 
-        Author : T. Riquet,Q. Laruelle
+        Author : T. Riquet, Q. Laruelle
         Date : December 2021
     """
+
     def get_addresse(self, addresse):
         """
                 Cette méthode renvoie les coordonnées d'une addresse donnée
@@ -19,8 +20,8 @@ class Addresse:
                 PRE : adresse est un str
                 POST : retourne les coordonées de l'addresse
                 RAISE :
-                -KeyError : lorsque la limite journalière autorisé par la clé API est atteinte
-                -openrouteservice.exceptions.ApiError : Erreur API lors d'un calcul d'itinéraire impossible
+                -KeyError : lorsque la limite journalière autorisée par la clé API est atteinte
+                -openrouteservice. Exceptions. ApiError : Erreur API lors d'un calcul d'itinéraire impossible
 
         """
 
@@ -28,7 +29,8 @@ class Addresse:
         long = 0
 
         url_addr = "https://maps.open-street.com/api/geocoding/?address=" + addresse + "&sensor=false&key" \
-                                                                                       "=143323c5ab5dfe15ec89b2bbb320bea7"
+                                                                                       "=143323c5ab5dfe15ec89b" \
+                                                                                       "2bbb320bea7"
         r_addr = requests.get(url_addr)
         coord = r_addr.json()
 
@@ -43,11 +45,11 @@ class Addresse:
 
     def get_route(self, long1, lat1, long2, lat2):
         """
-        Cette méthode calcul les étapes de l'itinéraire à partir de coordonnées GPS
+        Cette méthode calcul les étapes de l'itinéraire à partir de coordonnés GPS
 
         PRE : long1,lat1,long2,lat2 sont des entiers
-        POST : renvoie les étapes si possible
-        RAISES : openroute.exceptions.ApiError : Si le calcul de l'itinéraire est impossible : renvoie 0
+        POST : renvoie les étapes si possibles
+        RAISES : openroute. Exceptions. ApiError : Si le calcul de l'itinéraire est impossible : renvoie 0
         """
         response = ""
         try:
@@ -59,6 +61,8 @@ class Addresse:
                 for j in i['segments']:
                     for k in j['steps']:
                         response += ("\n" + k['instruction'])
+
+            return response
         except openrouteservice.exceptions.ApiError:
             return 0
 
@@ -67,16 +71,17 @@ class Itineraire:
     """
         Cette classe représente un module de calcul d'itinéraire pour le Chatbot
 
-        Author : T. Riquet,Q. Laruelle
+        Author : T. Riquet, Q. Laruelle
         Date : December 2021
         """
+
     def get_itineraire(self, adresse1, adresse2, arg):
         """
         Cette méthode renvoie calcul le temps et la distance entre deux points.
         Elle peut aussi renvoyer un itinéraire
 
-        PRE : adresse1 , adresse2 et arg sont des str
-        POST : retourne le temps ,la distance et/ou l'itinéraire demandé
+        PRE : adresse1, adresse2 et arg sont des str
+        POST : retourne le temps, la distance et l'itinéraire demandé
         RAISE : /
         """
 
@@ -113,7 +118,7 @@ class Itineraire:
         secondes = int((time % 3600) % 60)
         response += "\ntemps de trajet : " + str(heure) + "h " + str(minutes) + "m " + str(secondes) + "s"
 
-        if arg == '/route':
+        if arg == 'route':
             route = Addresse().get_route(long1, lat1, long2, lat2)
             if route != 0:
                 response += route
