@@ -51,7 +51,7 @@ class Chatbot:
 
         elif com == 'news':
             try:
-                self.__attribut1 = message[5:len(message) - 1]
+                self.__attribut1 = message[5:len(message) - 2]
                 if self.__attribut1 == " " or len(self.__attribut1) == 0:
                     return "Sujet invalide (Ex :!news IT 2)"
             except (ValueError, IndexError, KeyError):
@@ -122,7 +122,7 @@ class Chatbot:
 
 chatbot = Chatbot()
 
-message = '!'
+message = '!news IT 20'
 
 response = chatbot.get_command(message)
 if response is not None:
