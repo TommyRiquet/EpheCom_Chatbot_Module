@@ -29,8 +29,7 @@ class Addresse:
         long = 0
 
         url_addr = "https://maps.open-street.com/api/geocoding/?address=" + addresse + "&sensor=false&key" \
-                                                                                       "=143323c5ab5dfe15ec89b" \
-                                                                                       "2bbb320bea7"
+                                                                                       "=143323c5ab5dfe15ec89b2bbb320bea7"
         r_addr = requests.get(url_addr)
         coord = r_addr.json()
 
@@ -45,7 +44,7 @@ class Addresse:
 
     def get_route(self, long1, lat1, long2, lat2):
         """
-        Cette méthode calcul les étapes de l'itinéraire à partir de coordonnés GPS
+        Cette méthode calcule les étapes de l'itinéraire à partir de coordonnés GPS
 
         PRE : long1,lat1,long2,lat2 sont des entiers
         POST : renvoie les étapes si possibles
@@ -61,8 +60,6 @@ class Addresse:
                 for j in i['segments']:
                     for k in j['steps']:
                         response += ("\n" + k['instruction'])
-
-            return response
         except openrouteservice.exceptions.ApiError:
             return 0
 
@@ -77,7 +74,7 @@ class Itineraire:
 
     def get_itineraire(self, adresse1, adresse2, arg):
         """
-        Cette méthode renvoie calcul le temps et la distance entre deux points.
+        Cette méthode calcule le temps et la distance entre deux points.
         Elle peut aussi renvoyer un itinéraire
 
         PRE : adresse1, adresse2 et arg sont des str
