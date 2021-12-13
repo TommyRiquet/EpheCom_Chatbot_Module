@@ -39,8 +39,11 @@ class Chatbot:
         """
 
         if com == 'help':
-            self.__attribut1 = message.split(' ')[1]
-            return command.get_help(self.__attribut1)
+            try:
+                self.__attribut1 = message.split(' ')[1]
+                return command.get_help(self.__attribut1)
+            except IndexError:
+                return command.get_help()
 
         elif com == 'meteo':
             try:
@@ -122,7 +125,7 @@ class Chatbot:
 
 chatbot = Chatbot()
 
-message = '!news IT 20'
+message = '!help'
 
 response = chatbot.get_command(message)
 if response is not None:
