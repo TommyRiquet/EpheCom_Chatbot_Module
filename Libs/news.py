@@ -27,7 +27,4 @@ class News:
             if link_increment == nbr_query:
                 return response
 
-
-        message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendu. Possible que " \
-                  "vous avez demande trop de resultats ou qu'un nombre important de doublons se soit généré "
-        return response + '\n' + message
+        return response
