@@ -5,7 +5,7 @@
 ## todo  
 - [x] Module Meteo  : API openweathermap
 - [x] Module Itinéraire :Module openrouteservice
-- [ ] Module News   : Module googlesearch => approfondir la recherche (éviter les doublons)
+- [x] Module News   : Module googlesearch => approfondir la recherche (éviter les doublons)
 - [x] Commandes personnalisables : ephec,inginious,tlca etc.... 
 - [x] Ajouter de l'orienté object 
 - [x] Gérer les exceptions
