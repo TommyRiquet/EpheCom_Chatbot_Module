@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from googlesearch import search             #import google
+from googlesearch import search
 from urllib.parse import urlparse
+
 
 class News:
 
