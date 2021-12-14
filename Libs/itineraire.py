@@ -30,8 +30,8 @@ class Addresse:
         long = 0
 
         url_addr = "https://maps.open-street.com/api/geocoding/?address=" + addresse + "&sensor=false&key" \
-                                                                                       "=143323c5ab5dfe15ec89b" \
-                                                                                       "2bbb320bea7"
+                                                                                       "=9744eec549f1c82b18af8" \
+                                                                                       "a10f26d1489"
         r_addr = requests.get(url_addr)
         coord = r_addr.json()
 
