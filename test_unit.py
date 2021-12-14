@@ -18,7 +18,13 @@ class ChatBotTest(unittest.TestCase):
             Author: T. Riquet
             Date: December 2021
         """
+        # Test sans API
         self.assertEqual(chatbot.get_command('!meteo'), '\nmeteo (Nom de la Ville)\n')
+
+        # Test Avec API
+        """
+        self.assertEqual(chatbot.get_command('!meteo VilleQuiNexistePas'), 'Ville Introuvable')
+        """
 
     def test_chatbot_add(self):
         """
@@ -27,6 +33,8 @@ class ChatBotTest(unittest.TestCase):
             Author: T. Riquet
             Date: December 2021
         """
+        self.assertEqual(chatbot.get_command('!add'), 'add (Nom de la commande) (attribut de la commande/Site web à '
+                                                      'ouvrir)')
         self.assertEqual(chatbot.get_command('!add test test.com'), 'Commande "test" ajoutée avec succès')
         self.assertEqual(chatbot.get_command('!add bonjour salut'), 'Commande "bonjour" ajoutée avec succès')
 
@@ -37,10 +45,10 @@ class ChatBotTest(unittest.TestCase):
             Author: T. Riquet
             Date: December 2021
         """
+        self.assertEqual(chatbot.get_command('!rem'), 'rem (Nom de la commande)')
         self.assertEqual(chatbot.get_command('!rem ephec'), 'Commande "ephec" supprimé avec succès')
         self.assertEqual(chatbot.get_command('!rem tlca'), 'Commande "tlca" supprimé avec succès')
 
-    """A Completer"""
 
 
 if __name__ == '__main__':

@@ -35,17 +35,20 @@ meteo (Nom de la Ville)
             return self.__doc__
 
         # RECUPERATION DES DONNEES
-        temp = data['main']['temp']
-        temp_min = data['main']['temp_min']
-        temp_max = data['main']['temp_max']
-        humidite = data['main']['humidity']
-        description_temps = data['weather'][0]['description']
-        ville = data['name']
-        pays = data['sys']['country']
+        if data['cod'] != '404':
+            temp = data['main']['temp']
+            temp_min = data['main']['temp_min']
+            temp_max = data['main']['temp_max']
+            humidite = data['main']['humidity']
+            description_temps = data['weather'][0]['description']
+            ville = data['name']
+            pays = data['sys']['country']
 
-        # CREATION DE LA REPONSE
-        response = "Station météo de " + ville + " , " + pays + "\ntemperature moyenne:  {}".format(
-            temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)\nTaux d'humidite : {}".format(
-            humidite) + "%\nConditions climatiques : {}".format(description_temps)
+            # CREATION DE LA REPONSE
+            response = "Station météo de " + ville + " , " + pays + "\ntemperature moyenne:  {}".format(
+                temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)\nTaux d'humidite : {}".format(
+                humidite) + "%\nConditions climatiques : {}".format(description_temps)
         
-        return response
+            return response
+        else:
+            return 'Je ne connais pas cette ville :/'

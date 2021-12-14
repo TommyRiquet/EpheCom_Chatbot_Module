@@ -36,12 +36,12 @@ class Addresse:
         coord = r_addr.json()
 
         if coord['status'] == 'LIMIT_REACHED':
-            return 'LIMIT_REACHED'
+            return 'Oops, on dirait que vous avez atteint la limite journalière autorisé :/'
         try:
             lat = float(coord['results'][0]['geometry']['location']['lat'])
             long = float(coord['results'][0]['geometry']['location']['lng'])
         except KeyError:
-            pass
+            return 0
         return [lat, long]
 
     def get_route(self, long1, lat1, long2, lat2):
@@ -97,18 +97,22 @@ itineraire (Adresse 1) / (Adresse 2) /route
         # ADDRESSE 1
         addr1 = adresse1
         coord1 = Addresse().get_addresse(addr1)
-        if coord1 != 'LIMIT_REACHED':
-            lat1, long1 = coord1
+        if coord1 == 'LIMIT_REACHED':
+            return 'Oops, on dirait que vous avez atteint la limite journalière autorisé :/'
+        elif coord1 == 0:
+            return 'Oops, je ne connais pas l\'addresse 1 :/'
         else:
-            return 'Limite journalière atteinte'
+            lat1, long1 = coord1
 
         # ADDRESSE 2
         addr2 = adresse2
         coord2 = Addresse().get_addresse(addr2)
-        if coord2 != 'LIMIT_REACHED':
-            lat2, long2 = coord2
+        if coord2 == 'LIMIT_REACHED':
+            return 'Oops, on dirait que vous avez atteint la limite journalière autorisé :/'
+        elif coord2 == 0:
+            return 'Oops, je ne connais pas l\'addresse 2 :/'
         else:
-            return 'Limite journalière atteinte'
+            lat2, long2 = coord2
 
         # CALCUL DE TEMPS ET DE DISTANCE
         # https://maps.open-street.com/api/route/?origin="+coord1x+","+coord1y+"&destination="+coord2x+","+coord2y+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7
@@ -117,8 +121,11 @@ itineraire (Adresse 1) / (Adresse 2) /route
             long2) + "&mode=driving&key=9744eec549f1c82b18af8a10f26d1489"
         r_final = requests.get(url_final)
         data = r_final.json()
-        distance = data['total_distance']
-        time = data['total_time']
+        try:
+            distance = data['total_distance']
+            time = data['total_time']
+        except (ValueError, IndexError, KeyError):
+            return 'Oops , votre trajet a l\'air trop compliqué à calculer :/'
 
         # CREATION DE LA REPONSE
         response = "distance en km : " + str(round((distance / 1000), 2))
@@ -135,5 +142,5 @@ itineraire (Adresse 1) / (Adresse 2) /route
                 except requests.exceptions.ConnectionError:
                     response += route
             elif route == 0:
-                return 'Impossible de calculer l\'itinéraire'
+                return 'Oops, L\'itinéraire semble trop compliqué à calculer :/'
         return response

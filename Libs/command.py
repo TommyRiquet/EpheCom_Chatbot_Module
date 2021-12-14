@@ -32,18 +32,25 @@ class Commande:
         return return_string
 
     def add_command(self, message):
-        command = message.split(' ')[1]
-        attribut = ' '.join(message.split(' ')[2:])
-        list_commands[command] = attribut
-        return 'Commande "'+command+'" ajoutée avec succès'
+        """add (Nom de la commande) (attribut de la commande/Site web à ouvrir)"""
+        try:
+            command = message.split(' ')[1]
+            attribut = ' '.join(message.split(' ')[2:])
+            list_commands[command] = attribut
+            return 'Commande "'+command+'" ajoutée avec succès'
+        except IndexError:
+            return self.add_command.__doc__
 
     def rem_command(self, message):
-        command = message.split(" ")[1]
-
-        for i in list_commands:
-            if i == command:
-                del list_commands[command]
-                return 'Commande "' +command+'" supprimé avec succès'
+        """rem (Nom de la commande)"""
+        try:
+            command = message.split(" ")[1]
+            for i in list_commands:
+                if i == command:
+                    del list_commands[command]
+                    return 'Commande "' +command+'" supprimé avec succès'
+        except IndexError:
+            return self.rem_command.__doc__
 
     def commande_perso(self, command):
 
@@ -56,3 +63,4 @@ class Commande:
                         return list_commands[command]
         except KeyError:
             pass
+
