@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from googlesearch import search             #import google
+from googlesearch import search
 from urllib.parse import urlparse
 
 
@@ -52,6 +52,6 @@ news (Sujet) (Nombre de Sujet)
                 return response
 
 
-        message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendu. Possible " \
-                  "qu'un nombre important de doublons se soit généré "
+        message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendus. Possible " \
+                  "qu'un nombre important de doublons se soit générés "
         return response + '\n' + message
