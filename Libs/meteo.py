@@ -5,11 +5,8 @@ import requests
 
 class Meteo:
     """
-        Cette classe représente un module de Météo pour le Chatbot
-
-        Author : T. Riquet
-        Date : December 2021
-    """
+meteo (Nom de la Ville)
+"""
     def API_Call(self, ville):
         """
                Cette méthode appelle l'API en utilisant l'argument ville
@@ -24,7 +21,7 @@ class Meteo:
         data = r_weather.json()
         return data
 
-    def get_meteo(self, ville):
+    def get_meteo(self, message):
         """
         Cette méthode renvoie les informations sur la météo d'une ville
 
@@ -32,7 +29,10 @@ class Meteo:
         POST : retourne les informations sur la ville donnée en argument
         RAISES : /
         """
-        data = self.API_Call(ville)
+        try:
+            data = self.API_Call(message.split(" ")[1])
+        except IndexError:
+            return self.__doc__
 
         # RECUPERATION DES DONNEES
         temp = data['main']['temp']
@@ -47,5 +47,5 @@ class Meteo:
         response = "Station météo de " + ville + " , " + pays + "\ntemperature moyenne:  {}".format(
             temp) + "° (min :{}".format(temp_min) + "°/max : {}".format(temp_max) + "°)\nTaux d'humidite : {}".format(
             humidite) + "%\nConditions climatiques : {}".format(description_temps)
-
+        
         return response

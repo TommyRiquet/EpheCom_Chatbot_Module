@@ -3,6 +3,7 @@
 import openrouteservice
 import openrouteservice.exceptions
 import requests
+from deep_translator import GoogleTranslator
 
 
 class Addresse:
@@ -29,7 +30,8 @@ class Addresse:
         long = 0
 
         url_addr = "https://maps.open-street.com/api/geocoding/?address=" + addresse + "&sensor=false&key" \
-                                                                                       "=143323c5ab5dfe15ec89b2bbb320bea7"
+                                                                                       "=143323c5ab5dfe15ec89b" \
+                                                                                       "2bbb320bea7"
         r_addr = requests.get(url_addr)
         coord = r_addr.json()
 
@@ -44,7 +46,7 @@ class Addresse:
 
     def get_route(self, long1, lat1, long2, lat2):
         """
-        Cette méthode calcule les étapes de l'itinéraire à partir de coordonnés GPS
+        Cette méthode calcul les étapes de l'itinéraire à partir de coordonnés GPS
 
         PRE : long1,lat1,long2,lat2 sont des entiers
         POST : renvoie les étapes si possibles
@@ -60,27 +62,37 @@ class Addresse:
                 for j in i['segments']:
                     for k in j['steps']:
                         response += ("\n" + k['instruction'])
+
+            return response
         except openrouteservice.exceptions.ApiError:
             return 0
 
 
 class Itineraire:
     """
-        Cette classe représente un module de calcul d'itinéraire pour le Chatbot
+itineraire (Adresse 1) / (Adresse 2) /route
 
-        Author : T. Riquet, Q. Laruelle
-        Date : December 2021
-        """
+"""
 
-    def get_itineraire(self, adresse1, adresse2, arg):
+    def get_itineraire(self, message):
         """
-        Cette méthode calcule le temps et la distance entre deux points.
+        Cette méthode renvoie calcul le temps et la distance entre deux points.
         Elle peut aussi renvoyer un itinéraire
 
         PRE : adresse1, adresse2 et arg sont des str
         POST : retourne le temps, la distance et l'itinéraire demandé
         RAISE : /
         """
+
+        try:
+            adresse1 = message.split("/")[0][12:]
+            adresse2 = message.split("/")[1]
+            try:
+                arg = message.split("/")[2]
+            except (ValueError, IndexError, KeyError):
+                arg = ' '
+        except (ValueError, IndexError, KeyError):
+            return self.__doc__
 
         # ADDRESSE 1
         addr1 = adresse1
@@ -102,14 +114,14 @@ class Itineraire:
         # https://maps.open-street.com/api/route/?origin="+coord1x+","+coord1y+"&destination="+coord2x+","+coord2y+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7
         url_final = "https://maps.open-street.com/api/route/?origin=" + str(lat1) + "," + str(
             long1) + "&destination=" + str(lat2) + "," + str(
-            long2) + "&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7"
+            long2) + "&mode=driving&key=9744eec549f1c82b18af8a10f26d1489"
         r_final = requests.get(url_final)
         data = r_final.json()
         distance = data['total_distance']
         time = data['total_time']
 
         # CREATION DE LA REPONSE
-        response = "distance en km : " + str(distance / 1000)
+        response = "distance en km : " + str(round((distance / 1000), 2))
         heure = int(time / 3600)
         minutes = int((time % 3600) / 60)
         secondes = int((time % 3600) % 60)
@@ -118,8 +130,10 @@ class Itineraire:
         if arg == 'route':
             route = Addresse().get_route(long1, lat1, long2, lat2)
             if route != 0:
-                response += route
+                try:
+                    response += GoogleTranslator(source='en', target='fr').translate(route)
+                except requests.exceptions.ConnectionError:
+                    response += route
             elif route == 0:
                 return 'Impossible de calculer l\'itinéraire'
-
         return response

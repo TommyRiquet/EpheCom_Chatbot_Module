@@ -1,22 +1,41 @@
 # -*- coding: utf-8 -*-
 
-from googlesearch import search
+from googlesearch import search             #import google
 from urllib.parse import urlparse
 
 
 class News:
+    """
+news (Sujet) (Nombre de Sujet)
+"""
 
-    def get_news(self, query, nbr_query=1):
+    def get_news(self, message):
         """
-        Recherche des résultats sur le web avec l'aide de la librairie Google
-        :param query: Le sujet de la recherche
-        :param nbr_query: Le nombre de recherche
-        :return:
+        Cette methode recherche des résultats sur le web avec l'aide de la librairie Google
+
+        PRE : query est un str, nbr_query est un entier optionnel
+        POST : retourne les résultats de la cherche Google
+        RAISES : /
+
         """
         link_increment = 0
         site = []
         response = ''
         a = 10
+
+        # Récupération du sujet
+        try:
+            query = message[5:len(message) - 2]
+            if query == " " or len(query) == 0:
+                return self.__doc__
+        except (ValueError, IndexError, KeyError):
+            return self.__doc__
+        # Récupération du nombre d'articles demandés
+        try:
+            nbr_query = [int(nbr) for nbr in message.split() if nbr.isdigit()][-1]
+        except (ValueError, IndexError, KeyError):
+            nbr_query = 1
+
 
         if nbr_query > a:
             nbr_query = a
