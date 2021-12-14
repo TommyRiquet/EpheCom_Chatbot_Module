@@ -33,6 +33,6 @@ class News:
                 return response
 
 
-        message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendu. Possible " \
-                  "qu'un nombre important de doublons se soit généré "
+        message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendus. Possible " \
+                  "qu'un nombre important de doublons se soit générés "
         return response + '\n' + message

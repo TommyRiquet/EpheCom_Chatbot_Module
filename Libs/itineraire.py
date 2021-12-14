@@ -3,11 +3,12 @@
 import openrouteservice
 import openrouteservice.exceptions
 import requests
+from deep_translator import GoogleTranslator
 
 
 class Addresse:
     """
-        Cette classe représente une addresse utilisé dans la classe Itineraire
+        Cette classe représente une addresse utilisée dans la classe Itineraire
 
         Author : T. Riquet, Q. Laruelle
         Date : December 2021
@@ -29,7 +30,8 @@ class Addresse:
         long = 0
 
         url_addr = "https://maps.open-street.com/api/geocoding/?address=" + addresse + "&sensor=false&key" \
-                                                                                       "=143323c5ab5dfe15ec89b2bbb320bea7"
+                                                                                       "=143323c5ab5dfe15ec89" \
+                                                                                       "b2bbb320bea7"
         r_addr = requests.get(url_addr)
         coord = r_addr.json()
 
@@ -75,7 +77,7 @@ class Itineraire:
     def get_itineraire(self, adresse1, adresse2, arg):
         """
         Cette méthode calcule le temps et la distance entre deux points.
-        Elle peut aussi renvoyer un itinéraire
+        Elle peut aussi renvoyer un itinéraire traduit en français
 
         PRE : adresse1, adresse2 et arg sont des str
         POST : retourne le temps, la distance et l'itinéraire demandé
@@ -119,7 +121,8 @@ class Itineraire:
             route = Addresse().get_route(long1, lat1, long2, lat2)
             if route != 0:
                 response += route
+                translated = GoogleTranslator(source='en', target='fr').translate(response)
             elif route == 0:
                 return 'Impossible de calculer l\'itinéraire'
 
-        return response
+        return translated
