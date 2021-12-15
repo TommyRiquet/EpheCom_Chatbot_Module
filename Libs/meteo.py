@@ -25,9 +25,9 @@ meteo (Nom de la Ville)
         """
         Cette méthode renvoie les informations sur la météo d'une ville
 
-        PRE : ville est un str
+        PRE : message est une chaine de caractères
         POST : retourne les informations sur la ville donnée en argument
-        RAISES : /
+        RAISES : IndexError : Si le message ne cotient aucun argument => renvoie la docstring
         """
         try:
             data = self.API_Call(message.split(" ")[1])

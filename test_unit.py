@@ -11,6 +11,21 @@ class ChatBotTest(unittest.TestCase):
     """
     maxDiff = None
 
+    def test_chatbot_help(self):
+        """
+                    Cette méthode teste la commande !help du chatbot
+
+                    Author: T. Riquet
+                    Date: December 2021
+                """
+        self.assertEqual(chatbot.get_command('!help'), '\nmeteo (Nom de la Ville)\n\nnews (Sujet) (Nombre de '
+                                                       'Sujet)\n\nitineraire (Adresse 1) / (Adresse 2) /route\n\nadd '
+                                                       '(Nom de la commande) (Ce quelle retourne)\nrem (Nom de la '
+                                                       'commande)\n\nCommandes Personnalisées:\nephec : '
+                                                       'https://portail.ephec.be/\ninginious : '
+                                                       'https://inginious.ephec.be/\ntlca : '
+                                                       'https://www.tlca.eu/\ntest : test.com\nbonjour : salut\n')
+
     def test_chatbot_meteo(self):
         """
             Cette méthode teste la commande !meteo du chatbot

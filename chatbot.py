@@ -31,12 +31,9 @@ class Chatbot:
         """
         Cette classe appelle les différents modules et renvoie la réponse
 
-        PRE : com est la commande utilisée par l'utilisateur et message contient les arguments(optionnel)
-        POST : renvoie la réponse du module correspondant
-        RAISES :
-        -ValueError : lorsque l'ont introduit de mauvais arguments
-        -IndexError : Lors des splits, si l'argument est manquant
-        -KeyError : Lorsque les APIs utilisées ont atteint la limite journalière autorisée
+        PRE : message est une chaine de caractères
+        POST : renvoie la réponse du module correspondant à la commande
+        RAISES : /
         """
         if message.find('!') == 0:
             message = message[1:]
@@ -48,11 +45,11 @@ class Chatbot:
             pass
 
 
+"""
 chatbot = Chatbot()
 
-message = "!itineraire oops / blabla"
+message = "!"
 reponse = chatbot.get_command(message)
 if reponse is not None:
     print(reponse)
-
-
+"""

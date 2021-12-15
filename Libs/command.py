@@ -3,12 +3,6 @@ from Libs.meteo import Meteo
 from Libs.news import News
 from Libs.itineraire import Itineraire
 
-"""
-    Ce module est utilisé pour les commandes du chatbot
-
-    Author : T. Riquet
-    Date : December 2021
-"""
 
 list_commands = {"ephec": "https://portail.ephec.be/",
          "inginious": "https://inginious.ephec.be/",
@@ -16,12 +10,24 @@ list_commands = {"ephec": "https://portail.ephec.be/",
 
 
 class Commande:
+    """
+        Ce module est utilisé pour les commandes du chatbot
+
+        Author : T. Riquet
+        Date : December 2021
+    """
     def get_help(self, message):
+        """
+        Cette méthode renvoie la liste des commandes
+
+        PRE : message est une chaine de caractère
+        POST : renvoie les docstrings de chaque module + la liste des commandes + la liste des commandes personnalisées
+        RAISES : /
+        """
 
         # Get Modules Docstrings
         return_string = Meteo().__doc__ + News().__doc__ + Itineraire().__doc__
         return_string += 'add (Nom de la commande) (Ce quelle retourne)\n'\
-                         'addweb (Nom de la commande) (Site Web)\n'\
                          'rem (Nom de la commande)\n'
         # Get List of commands
         if len(list_commands) > 0:
@@ -53,7 +59,13 @@ class Commande:
             return self.rem_command.__doc__
 
     def commande_perso(self, command):
+        """
+        Cette méthode est utilisée pour appeler une commande personnalisée
 
+        PRE : command est une chaine de caractères
+        POST : Si attribut de command != lien url : renvoie l'attribut, sinon ouvre lien url
+        Raises : KeyError : -Commande inconnue
+        """
         try:
             for i in list_commands:
                 if i == command:
