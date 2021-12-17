@@ -41,7 +41,11 @@ class Commande:
         """add (Nom de la commande) (attribut de la commande/Site web à ouvrir)"""
         try:
             command = message.split(' ')[1]
-            attribut = ' '.join(message.split(' ')[2:])
+            list_attribut = message.split(' ')
+            if len(list_attribut) > 2:
+                attribut = ' '.join(list_attribut[2:])
+            else:
+                return 'Veuillez entrer un attribut'
             list_commands[command] = attribut
             return 'Commande "'+command+'" ajoutée avec succès'
         except IndexError:
