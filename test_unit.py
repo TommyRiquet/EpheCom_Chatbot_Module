@@ -13,96 +13,119 @@ class ChatBotTest(unittest.TestCase):
     """
     maxDiff = None
 
+    def setUp(self):
+        self.chatbot = Chatbot()
+
     def test_chatbot_help(self):
         """
-            Cette méthode teste la commande !help du chatbot
+            Cette méthode teste la méthode get_help du module Commande
 
             Author: T. Riquet
             Date: December 2021
         """
-        chatbot_help = Chatbot()
-        command_help = Commande()
 
-        #TEST INSTANCE
-        self.assertIsInstance(chatbot_help,Chatbot,'Test si chatbot_help est une instance de Chatbot()')
-        self.assertIsInstance(command_help,Commande,'Test si command_help est une instance de Commande()')
+        # TEST INSTANCE
+        self.assertIsInstance(self.chatbot, Chatbot, 'Test si chatbot est une instance de Chatbot()')
 
-        self.assertEqual(chatbot_help.get_command('!help'), command_help.get_help('help'))
+        # Test si le module commande renvoie la liste des commandes lorsqu'il ne recoit pas de message
+        self.assertEqual(self.chatbot.get_command('!help'), Commande().get_help(''))
 
-    def test_chatbot_meteo(self):
-        """
-            Cette méthode teste la commande !meteo du chatbot
-
-            Author: T. Riquet
-            Date: December 2021
-        """
-        chatbot_meteo = Chatbot()
-
-        #TEST INSTANCE
-        self.assertIsInstance(chatbot_meteo, Chatbot, 'Test si chatbot_meteo est une instance de Chatbot()')
-
-        # Test sans API
-        self.assertEqual(chatbot_meteo.get_command('!meteo'), '\nmeteo (Nom de la Ville)\n')
-        self.assertEqual(chatbot_meteo.get_command('!meteo'), Meteo().get_meteo(""))
-        self.assertEqual(chatbot_meteo.get_command('!meteo'), Meteo().get_meteo("meteo"))
-
-        # Test Avec API
-        """
-        self.assertNotEqual(chatbot_meteo.get_command('!meteo Paris'), 'Ville Introuvable')
-        self.assertEqual(chatbot_meteo.get_command('!meteo VilleQuiNexistePas'), 'Ville Introuvable')
-        """
+        # Test si le module commande renvoie la liste des commandes lorsqu'il recoit un message quelconque
+        self.assertEqual(self.chatbot.get_command('!help'), Commande().get_help('help'))
+        self.assertEqual(self.chatbot.get_command('!help'), Commande().get_help('test'))
+        self.assertEqual(self.chatbot.get_command('!help'), Commande().get_help('123'))
+        self.assertEqual(self.chatbot.get_command('!help'), Commande().get_help(0))
+        self.assertEqual(self.chatbot.get_command('!help'), Commande().get_help(None))
 
     def test_chatbot_add(self):
         """
-            Cette méthode teste la commande !add du chatbot
+            Cette méthode teste la méthode add_command du module Commande
 
             Author: T. Riquet
             Date: December 2021
         """
-        chatbot_add = Chatbot()
-        command_add = Commande()
 
-        #TEST INSTANCE
-        self.assertIsInstance(chatbot_add, Chatbot, 'Test si chatbot_add est une instance de Chatbot()')
-        self.assertIsInstance(command_add, Commande, 'Test si command_add est une instance de Commande()')
+        # Test si le chatbot n'envoie pas d'arguments à la méthode add_command du Chatbot
+        self.assertEqual(self.chatbot.get_command('!add'), 'add (Nom de la commande) (attribut de la commande/Site '
+                                                           'web à ouvrir)')
 
-        self.assertEqual(chatbot_add.get_command('!add'), 'add (Nom de la commande) (attribut de la commande/Site web à '
-                                                      'ouvrir)')
-        self.assertEqual(chatbot_add.get_command('!add'), command_add.add_command("add"))
+        # Test si la méthode ne recois pas d'arguments du Chatbot
+        self.assertEqual(self.chatbot.get_command('!add'), Commande().add_command(""))
 
-        self.assertEqual(chatbot_add.get_command('!add SansAttribut'), 'Veuillez entrer un attribut')
-        self.assertEqual(chatbot_add.get_command('!add SansAttribut'), command_add.add_command("add SansAttribut"))
+        # Test si l'on envoie une commande sans attribut
+        self.assertEqual(self.chatbot.get_command('!add SansAttribut'), 'Veuillez entrer un attribut')
+        self.assertEqual(self.chatbot.get_command('!add SansAttribut'), Commande().add_command("add SansAttribut"))
 
-        self.assertEqual(chatbot_add.get_command('!add test test.com'), 'Commande "test" ajoutée avec succès')
-        self.assertEqual(chatbot_add.get_command('!add test test.com'), command_add.add_command('add test test.com'))
-        self.assertNotEqual(chatbot_add.get_command('!add test test.com'), command_add.add_command('add t test.com'))
+        # Test si l'on envoie une commande avec un attribut
+        self.assertEqual(self.chatbot.get_command('!add bonjour salut'), 'Commande "bonjour" ajoutée avec succès')
 
-        self.assertEqual(chatbot_add.get_command('!add bonjour salut'), 'Commande "bonjour" ajoutée avec succès')
-        self.assertEqual(chatbot_add.get_command('!add bonjour salut'), command_add.add_command('add bonjour salut'))
-        self.assertNotEqual(chatbot_add.get_command('!add bonjour salut'), command_add.add_command('add bon salut'))
+        # Test si on essaie de créer une commande qui existe déja
+        self.assertEqual(self.chatbot.get_command('!add bonjour salut'), 'Commande "bonjour" existe déja avec '
+                                                                         'l\'attribut "salut"')
 
+        # Test si l'on envoie une commande avec un lien http comme attribut
+        self.assertEqual(self.chatbot.get_command('!add youtube https://youtube.com'), 'Commande "youtube" ajoutée '
+                                                                                       'avec succès')
+        # Test si on essaie de créer une commande qui existe déja avec un lien comme attribut
+        self.assertEqual(self.chatbot.get_command('!add youtube https://youtube.com'), 'Commande "youtube" existe '
+                                                                                       'déja avec l\'attribut '
+                                                                                       '"https://youtube.com"')
 
     def test_chatbot_rem(self):
         """
-            Cette méthode teste la commande !rem du chatbot
+            Cette méthode teste la méthode rem_command du module Commande
 
             Author: T. Riquet
             Date: December 2021
         """
-        chatbot_rem = Chatbot()
-        command_rem = Commande()
 
-        #TEST INSTANCE
-        self.assertIsInstance(chatbot_rem, Chatbot, 'Test si chatbot_rem est une instance de Chatbot()')
-        self.assertIsInstance(command_rem, Commande, 'Test si command_rem est une instance de Commande()')
+        # Test si le chatbot envoie la commande rem sans argument
+        self.assertEqual(self.chatbot.get_command('!rem'), 'rem (Nom de la commande)')
 
-        self.assertEqual(chatbot_rem.get_command('!rem'), 'rem (Nom de la commande)')
-        self.assertEqual(chatbot_rem.get_command('!rem'), command_rem.rem_command(''))
-        self.assertEqual(chatbot_rem.get_command('!rem'), command_rem.rem_command('rem'))
+        # Test si la méthode rem_command ne recoit pas d'argument
+        self.assertEqual(self.chatbot.get_command('!rem'), Commande().rem_command(''))
 
-        self.assertEqual(chatbot_rem.get_command('!rem ephec'), 'Commande "ephec" supprimé avec succès')
-        self.assertEqual(chatbot_rem.get_command('!rem tlca'), 'Commande "tlca" supprimé avec succès')
+        # Test si l'on supprime une commande
+        self.assertEqual(self.chatbot.get_command('!rem ephec'), 'Commande "ephec" supprimé avec succès')
+        self.assertEqual(self.chatbot.get_command('!rem tlca'), 'Commande "tlca" supprimé avec succès')
 
+        # Test si l'on supprime une commande personnalisé
+        self.chatbot.get_command('!add test testAttribut')
+        self.assertEqual(self.chatbot.get_command('!rem test'), 'Commande "test" supprimé avec succès')
+
+        # Test si l'on supprime une commande qui n'existe pas
+        self.assertEqual(self.chatbot.get_command('!rem commandeQuiNexistePas'), 'Commande "commandeQuiNexistePas" '
+                                                                                 'Introuvable')
+
+    def test_chatbot_meteo(self):
+        """
+            Cette méthode teste le Module Meteo du chatbot
+
+            Author: T. Riquet
+            Date: December 2021
+        """
+
+        # Test si le chatbot n'envoie pas d'argument au module Meteo
+        self.assertEqual(self.chatbot.get_command('!meteo'), '\nmeteo (Nom de la Ville)\n')
+
+        # Test si le module Meteo ne recois pas d'argument
+        self.assertEqual(self.chatbot.get_command('!meteo'), Meteo().get_meteo(""))
+
+        # Test Avec API
+        """
+        # Test si le module trouve les villes passées en argument
+        self.assertNotEqual(self.chatbot.get_command('!meteo Paris'), 'Ville Introuvable')
+        self.assertNotEqual(self.chatbot.get_command('!meteo Bruxelles'), 'Ville Introuvable')
+        self.assertNotEqual(self.chatbot.get_command('!meteo Perwez'), 'Ville Introuvable')
+
+        # Test si le module recoit une ville qui n'existe pas
+        self.assertEqual(self.chatbot.get_command('!meteo VilleQuiNexistePas'), 'Ville Introuvable')
+
+        # Test si le module recoit un code postal 
+        self.assertNotEqual(self.chatbot.get_command('!meteo 1360'), 'Ville Introuvable')
+        self.assertNotEqual(self.chatbot.get_command('!meteo 1000'), 'Ville Introuvable')
+
+        """
 
     def test_chatbot_itineraire(self):
         """
@@ -146,7 +169,6 @@ class ChatBotTest(unittest.TestCase):
         self.assertEqual(chatbot.get_command('!itineraire 125489632145 / Palais12'),)
         self.assertEqual(chatbot.get_command('!itineraire 125489632145 / Palais12 / route'),)
         """
-
 
 
 if __name__ == '__main__':

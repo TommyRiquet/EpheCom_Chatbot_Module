@@ -3,10 +3,9 @@ from Libs.meteo import Meteo
 from Libs.news import News
 from Libs.itineraire import Itineraire
 
-
 list_commands = {"ephec": "https://portail.ephec.be/",
-         "inginious": "https://inginious.ephec.be/",
-         "tlca": "https://www.tlca.eu/"}
+                 "inginious": "https://inginious.ephec.be/",
+                 "tlca": "https://www.tlca.eu/"}
 
 
 class Commande:
@@ -16,18 +15,19 @@ class Commande:
         Author : T. Riquet
         Date : December 2021
     """
+
     def get_help(self, message):
         """
         Cette méthode renvoie la liste des commandes
 
-        PRE : message est une chaine de caractère
+        PRE : /
         POST : renvoie les docstrings de chaque module + la liste des commandes + la liste des commandes personnalisées
         RAISES : /
         """
 
         # Get Modules Docstrings
         return_string = Meteo().__doc__ + News().__doc__ + Itineraire().__doc__
-        return_string += 'add (Nom de la commande) (Ce quelle retourne)\n'\
+        return_string += 'add (Nom de la commande) (Ce quelle retourne)\n' \
                          'rem (Nom de la commande)\n'
         # Get List of commands
         if len(list_commands) > 0:
@@ -46,8 +46,11 @@ class Commande:
                 attribut = ' '.join(list_attribut[2:])
             else:
                 return 'Veuillez entrer un attribut'
-            list_commands[command] = attribut
-            return 'Commande "'+command+'" ajoutée avec succès'
+            if command in list_commands:
+                return 'Commande "' + command + '" existe déja avec l\'attribut "' + list_commands[command] + '"'
+            else:
+                list_commands[command] = attribut
+                return 'Commande "' + command + '" ajoutée avec succès'
         except IndexError:
             return self.add_command.__doc__
 
@@ -58,7 +61,8 @@ class Commande:
             for i in list_commands:
                 if i == command:
                     del list_commands[command]
-                    return 'Commande "' +command+'" supprimé avec succès'
+                    return 'Commande "' + command + '" supprimé avec succès'
+            return 'Commande "' + command + '" Introuvable'
         except IndexError:
             return self.rem_command.__doc__
 
@@ -79,4 +83,3 @@ class Commande:
                         return list_commands[command]
         except KeyError:
             pass
-
