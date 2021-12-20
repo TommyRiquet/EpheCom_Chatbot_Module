@@ -25,10 +25,10 @@ Voici un tableau représentant les commandes disponibles :
 
 | Commande | Description | Auteur
 |:---:|:---:|:---:
-| !help | Afficher la liste des commandes disponibles | [Tommy Riquet](https://github.com/Tommyriquet)
-| !add | Ajoute une commande personnalisée / peut contenir une phrase ou un site web | [Tommy Riquet](https://github.com/Tommyriquet)
-| !rem | Supprime une commande personnalisée | [Tommy Riquet](https://github.com/Tommyriquet)
-| !meteo | Afficher les informations météo d'une ville | [Tommy Riquet](https://github.com/Tommyriquet)
+| !help | Afficher la liste des commandes disponibles | [Tommy Riquet](https://github.com/ImNeow)
+| !add | Ajoute une commande personnalisée / peut contenir une phrase ou un site web | [Tommy Riquet](https://github.com/ImNeow)
+| !rem | Supprime une commande personnalisée | [Tommy Riquet](https://github.com/ImNeow)
+| !meteo | Afficher les informations météo d'une ville | [Tommy Riquet](https://github.com/ImNeow)
 | !itineraire | Calcul et affiche un trajet sur base de deux adresses | [Quentin Laruelle](https://github.com/QuentinLaruelle)
 | !news | Récupère des articles sur Google à partir d'un sujet donné | [Sebastian Dziemianko](https://github.com/DziemiankoSebastian)
   
