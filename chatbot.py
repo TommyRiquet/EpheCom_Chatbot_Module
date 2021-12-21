@@ -11,7 +11,7 @@ class Chatbot:
     """
     Cette classe représente un module de Chatbot pour l'application Ephecom
 
-    Author : T. Riquet
+    Author : T. Riquet, Q. Laruelle, S. Dziemianko
     Date : December 2021
     """
 
@@ -23,6 +23,9 @@ class Chatbot:
         self.__list_command = {'help': Commande().get_help, 'meteo': Meteo().get_meteo, 'news': News().get_news,
                                'itineraire': Itineraire().get_itineraire, 'add': Commande().add_command,
                                'rem': Commande().rem_command}
+        self.__attribut1 = ''
+        self.__attribut2 = ''
+        self.__attribut3 = ''
 
     def get_command(self, message):
         """

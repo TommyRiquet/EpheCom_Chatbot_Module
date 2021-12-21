@@ -1,6 +1,7 @@
 from chatbot import Chatbot
-from Libs.meteo import Meteo
-from Libs.command import Commande
+from src.meteo import Meteo
+from src.command import Commande
+from src.news import News
 import unittest
 
 
@@ -169,6 +170,26 @@ class ChatBotTest(unittest.TestCase):
         self.assertEqual(chatbot.get_command('!itineraire 125489632145 / Palais12'),)
         self.assertEqual(chatbot.get_command('!itineraire 125489632145 / Palais12 / route'),)
         """
+
+    def test_chatbot_news(self):
+        """
+        Cette methode test le module !news du chatbot
+
+        Author : S. Dziemianko
+        Date : December 2021
+        """
+        self.assertEqual(self.chatbot.get_command('!news'), 'news (Sujet) (Nombre de Sujet)')
+        self.assertEqual(self.chatbot.get_command('!news'), News().get_news(""))
+
+        self.assertEqual(self.chatbot.get_command('!news IT 3'), 3)
+        self.assertEqual(self.chatbot.get_command('!news IT 15'), 10)
+
+        with self.assertRaises(ValueError):
+            self.chatbot.get_command('!news IT 0'), 0
+        with self.assertRaises(IndexError):
+            self.chatbot.get_command('!news IT 0'), 0
+        with self.assertRaises(KeyError):
+            self.chatbot.get_command('!news IT 0'), 0
 
 
 if __name__ == '__main__':

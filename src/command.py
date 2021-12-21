@@ -1,7 +1,7 @@
 import webbrowser
-from Libs.meteo import Meteo
-from Libs.news import News
-from Libs.itineraire import Itineraire
+from src.meteo import Meteo
+from src.news import News
+from src.itineraire import Itineraire
 
 list_commands = {"ephec": "https://portail.ephec.be/",
                  "inginious": "https://inginious.ephec.be/",

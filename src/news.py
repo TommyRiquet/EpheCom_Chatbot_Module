@@ -22,6 +22,7 @@ news (Sujet) (Nombre de Sujet)
         site = []
         response = ''
         a = 10
+        b = 25
 
         # Récupération du sujet
         try:
@@ -36,12 +37,11 @@ news (Sujet) (Nombre de Sujet)
         except (ValueError, IndexError, KeyError):
             nbr_query = 1
 
-
         if nbr_query > a:
             nbr_query = a
 
         # Recuperation des recherches
-        for url in search(str(query), tld='com', lang='fr', num=25, stop=25, pause=2):
+        for url in search(str(query), tld='com', lang='fr', num=b, stop=b, pause=2):
             domain = urlparse(url).netloc
             if domain not in site:
                 site.append(domain)
@@ -51,7 +51,7 @@ news (Sujet) (Nombre de Sujet)
             if link_increment == nbr_query:
                 return response
 
-
-        message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendus. Possible " \
-                  "qu'un nombre important de doublons se soit générés "
+        if response != nbr_query:
+            message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendus. Possible" \
+                      " qu'un nombre important de doublons se soit générés "
         return response + '\n' + message
