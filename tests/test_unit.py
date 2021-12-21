@@ -141,12 +141,15 @@ class ChatBotTest(unittest.TestCase):
         """
         chatbot_itineraire = Chatbot()
 
-        #Test Sans API
-        self.assertEqual(chatbot_itineraire.get_command('!itineraire'),'\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
+        # Test Sans API
+        self.assertEqual(chatbot_itineraire.get_command('!itineraire'),
+                         '\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
         self.assertEqual(chatbot_itineraire.get_command('itineraire'), None)
-        self.assertEqual(chatbot_itineraire.get_command('!itineraire rue de chaumont 41 1325 Longueville, rue notre dame 65 Perwez'),'\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
+        self.assertEqual(
+            chatbot_itineraire.get_command('!itineraire rue de chaumont 41 1325 Longueville, rue notre dame 65 Perwez'),
+            '\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
 
-        #Test Avec API
+        # Test Avec API
         """
         self.assertEqual(chatbot_itineraire.get_command('!itineraire rue de chaumont 41 1325 Longueville / rue notre-Dame 65 '
                                              'Perwez'),'')
@@ -171,27 +174,6 @@ class ChatBotTest(unittest.TestCase):
         self.assertEqual(chatbot.get_command('!itineraire 125489632145 / Palais12 / route'),)
         """
 
-    def test_chatbot_news(self):
-        """
-        Cette methode test le module !news du chatbot
-
-        Author : S. Dziemianko
-        Date : December 2021
-        """
-        self.assertEqual(self.chatbot.get_command('!news'), 'news (Sujet) (Nombre de Sujet)')
-        self.assertEqual(self.chatbot.get_command('!news'), News().get_news(""))
-
-        self.assertEqual(self.chatbot.get_command('!news IT 3'), 3)
-        self.assertEqual(self.chatbot.get_command('!news IT 15'), 10)
-
-        with self.assertRaises(ValueError):
-            self.chatbot.get_command('!news IT 0'), 0
-        with self.assertRaises(IndexError):
-            self.chatbot.get_command('!news IT 0'), 0
-        with self.assertRaises(KeyError):
-            self.chatbot.get_command('!news IT 0'), 0
-
 
 if __name__ == '__main__':
-
     unittest.main()
