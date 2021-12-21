@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # Python 3.10
 
-from Libs.command import Commande
-from Libs.meteo import Meteo
-from Libs.news import News
-from Libs.itineraire import Itineraire
+from src.command import Commande
+from src.meteo import Meteo
+from src.news import News
+from src.itineraire import Itineraire
 
 
 class Chatbot:
