@@ -29,6 +29,9 @@ meteo (Nom de la Ville)
         POST : retourne les informations sur la ville donnée en argument
         RAISES : IndexError : Si le message ne cotient aucun argument => renvoie la docstring
         """
+
+        if message == '' or message == " " or message is None:
+            return self.__doc__
         try:
             data = self.API_Call(message.split(" ")[1])
         except IndexError:

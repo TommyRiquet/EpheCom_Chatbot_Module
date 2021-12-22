@@ -16,10 +16,7 @@ class Chatbot:
     """
 
     def __init__(self):
-        """
-        PRE : /
-        POST : /
-        """
+
         self.__list_command = {'help': Commande().get_help, 'meteo': Meteo().get_meteo, 'news': News().get_news,
                                'itineraire': Itineraire().get_itineraire, 'add': Commande().add_command,
                                'rem': Commande().rem_command}
