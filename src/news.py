@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 
 class News:
     """
-news (Sujet) (Nombre de Sujet)
+news (Sujet) (Nombre de Sujet(min 1, max 10))
 """
 
     def get_news(self, message):
@@ -14,8 +14,8 @@ news (Sujet) (Nombre de Sujet)
         Cette methode recherche des résultats sur le web avec l'aide de la librairie Google
 
         PRE : query est un str, nbr_query est un entier optionnel
-        POST : retourne les résultats de la cherche Google
-        RAISES : /
+        POST : retourne les résultats de la recherche Google
+        RAISES : ValueError: erreur lors de la récuperation du nombre de resultats attendu
 
         """
         link_increment = 0
@@ -33,7 +33,9 @@ news (Sujet) (Nombre de Sujet)
             return self.__doc__
         # Récupération du nombre d'articles demandés
         try:
-            nbr_query = [int(nbr) for nbr in message.split() if nbr.isdigit()][-1]
+            nbr_query = [int(nbr) for nbr in message.split() if nbr.isdigit()][-2]
+            if nbr_query <= 0:
+                raise ValueError('Impossible de générer un nombre négatif de réponses')
         except (ValueError, IndexError, KeyError):
             nbr_query = 1
 
@@ -41,7 +43,7 @@ news (Sujet) (Nombre de Sujet)
             nbr_query = a
 
         # Recuperation des recherches
-        for url in search(str(query), tld='com', lang='fr', num=b, stop=b, pause=2):
+        for url in search(str(query), tld='com', lang='fr', num=b, stop=b, pause=1):
             domain = urlparse(url).netloc
             if domain not in site:
                 site.append(domain)

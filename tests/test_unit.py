@@ -5,6 +5,7 @@ from src.news import News
 from src.itineraire import Itineraire
 from src.itineraire import Addresse
 import unittest
+from urllib.parse import urlparse
 
 
 class ChatBotTest(unittest.TestCase):
@@ -172,10 +173,10 @@ class ChatBotTest(unittest.TestCase):
         """
 
         # Test si get_argument ne recoit pas d'argument
-        self.assertEqual(Itineraire().get_argument('itineraire '),'\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
+        self.assertEqual(Itineraire().get_argument('itineraire '), '\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
 
         # Test si la méthode renvoie bien la doc
-        self.assertEqual(Itineraire().get_argument('itineraire '),Itineraire().__doc__)
+        self.assertEqual(Itineraire().get_argument('itineraire '), Itineraire().__doc__)
 
         # Test quand la méthode ne reçoit pas d'argument "/route"
         self.assertEqual(Itineraire().get_argument('itineraire Palais12 / rue de notre dame 65 Perwez'),
@@ -214,10 +215,58 @@ class ChatBotTest(unittest.TestCase):
         self.assertRaises(TypeError, Addresse().get_addresse, 56)
         """
 
+    def test_chatbot_news(self):
+        """
+        Cette methode test le module !news du chatbot
 
+        Author: S. Dziemianko
+        Date: December 2021
+        """
+        self.assertEqual(self.chatbot.get_command('!news'), '\nnews (Sujet) (Nombre de Sujet(min 1, max 10))\n')
+        self.assertEqual(self.chatbot.get_command('!news'), News().get_news(""))
 
+        # test long appelant le module (temps d'execution estimé 30 secondes) => passé en commentaire
+        """
+        self.assertEqual(self.chatbot.get_command('!news IT 1'),self.chatbot.get_command('!news IT 1'))
+        self.assertEqual(self.chatbot.get_command('!news IT 3'),self.chatbot.get_command('!news IT 3'))
+        self.assertEqual(self.chatbot.get_command('!news IT 10'), self.chatbot.get_command('!news IT 10'))
+        self.assertEqual(self.chatbot.get_command('!news IT 15'), self.chatbot.get_command('!news IT 10'))
+        self.assertEqual(self.chatbot.get_command('!news IT -1'), self.chatbot.get_command('!news IT 1'))
+        self.assertEqual(self.chatbot.get_command('!news IT 0'), self.chatbot.get_command('!news IT 1'))
+        """
 
+    def test_domain_parse(self):
+        """
+        cette methode test que les liens sont bien parsé pour la gestion des doublons
 
+        Author: S. Dziemianko
+        Date: December 2021
+        """
+
+        self.assertEqual(urlparse('https://fr.wikipedia.org/wiki/Informatique').netloc, 'fr.wikipedia.org')
+        self.assertEqual(urlparse('https://www.youtube.com/watch?v=7no56Zw1e20').netloc, 'www.youtube.com')
+        self.assertEqual(urlparse('https://realpython.com/python-mock-library/').netloc, 'realpython.com')
+        self.assertEqual(urlparse('https://docs.python.org/3/library/unittest.mock.html').netloc, 'docs.python.org')
+        self.assertEqual(urlparse('https://cmcdocs.gwabbit.com:8443/cmc/').netloc, 'cmcdocs.gwabbit.com:8443')
+        self.assertEqual(urlparse('https://square.github.io/okhttp/4.x/okhttp/okhttp3/-http-url/').netloc,
+                         'square.github.io')
+
+    def test_domain_in_site(self):
+        """
+        Cette methode vérifie que l'array site compose des domaines deja utilisé est parcouru pour vérifier les doublons
+
+        Author: S. Dziemianko
+        Date: Decembre 2021
+        """
+        self.site = ['fr.wikipedia.org', 'www.youtube.com', 'realpython.com', 'docs.python.org',
+                     'cmcdocs.gwabbit.com:8443', 'square.github.io']
+
+        self.assertIn(urlparse('https://fr.wikipedia.org/wiki/Informatique').netloc, self.site)
+        self.assertIn(urlparse('https://www.youtube.com/watch?v=y0lg_-8vr5w&list=RDGMEM6ijAnFTG9').netloc, self.site)
+        self.assertIn(urlparse('https://docs.python.org/3/library/unittest.mock.html').netloc, self.site)
+        self.assertNotIn(urlparse('https://twitter.com/home').netloc, self.site)
+        self.assertNotIn(urlparse('https://www.facebook.com/').netloc, self.site)
+        self.assertNotIn(urlparse('https://portail.ephec.be/').netloc, self.site)
 
 
 if __name__ == '__main__':
