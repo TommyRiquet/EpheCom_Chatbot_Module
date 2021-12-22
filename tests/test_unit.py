@@ -151,19 +151,26 @@ class Test_ChatBot_meteo(unittest.TestCase):
 
 
 class Test_ChatBot_itineraire(unittest.TestCase):
+    """
+    Cette classe contient les différents tests pour les différentes méthodes du module itineraire utilisé par le Chatbot
+
+    Author: Q.Laruelle
+    date: December 2021
+    """
 
     def setUp(self):
         self.chatbot = Chatbot()
 
-    def test_chatbot_itineraire(self):
+
+    def test_chatbot_get_itineraire(self):
         """
-        Cette méthode teste la commande !itineraire du chatbot
+        Cette méthode teste la méthode get_itineraire du chatbot
 
         Author: Q. Laruelle
         Date: december 2021
         """
         """
-                clefs utilisation normale: 9744eec549f1c82b18af8a10f26d1489 ou 143323c5ab5dfe15ec89b2bbb320bea7
+                clefs API utilisation normale: 9744eec549f1c82b18af8a10f26d1489 ou 143323c5ab5dfe15ec89b2bbb320bea7
                 clefs API de test: 3bbc0c5c02b03a7e43723288f3de55fe ou bb19b66d645ba9c738d69f239b2808ec
         """
 
@@ -171,20 +178,19 @@ class Test_ChatBot_itineraire(unittest.TestCase):
         self.assertEqual(self.chatbot.get_command('!itineraire'),
                          '\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
 
-        # Test de l'appel d'itineraire sans lui mettre de point d'exclamation ni d'adresse
-        self.assertEqual(self.chatbot.get_command('itineraire'), None)
+        # Test de l'appel de get_itineraire en lui passant une adresse fausse en 1er paramètre
+        self.assertEqual(
+            self.chatbot.get_command('!itineraire aihfoidhvbaozehf / rue de chaumont 41 Longueville'),
+            "Oops, je ne connais pas l'addresse 1 :/")
 
-        # Test de l'appel d'itineraire sans lui mettre de point d'exclamation
-        self.assertEqual(self.chatbot.get_command('itineraire rue de chaumont 41 1325 Longueville / '
-                                                  'rue notre dame 65 Perwez'), None)
-
-        # Test de l'appel d'itineraire sans lui mettre de point d'exclamation et avec des virgules en place des slashs
-        self.assertEqual(self.chatbot.get_command('itineraire rue de chaumont 41 1325 Longueville , '
-                                                  'rue notre dame 65 Perwez ,route'), None)
+        # Test de l'appel de get_itineraire en lui passant une adresse fausse en 2ème paramètre
+        self.assertEqual(
+            self.chatbot.get_command('!itineraire rue de chaumont 41 Longueville / aihfoidhvbaozehf'),
+            "Oops, je ne connais pas l'addresse 2 :/")
 
         # Test de l'appel d'itineraire en utilisant des virgules plutôt que des slashs
         self.assertEqual(
-            self.chatbot.get_command('!itineraire rue de chaumont 41 1325 Longueville, rue notre dame 65 Perwez'),
+            self.chatbot.get_command('!itineraire rue de chaumont 41 1325 Longueville , rue notre dame 65 Perwez'),
             '\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
 
     def test_chatbot_itineraire_get_argument(self):
@@ -195,10 +201,10 @@ class Test_ChatBot_itineraire(unittest.TestCase):
         Date: december 2021
         """
 
-        # Test si get_argument ne recoit pas d'argument
+        # Test quand get_argument ne recoit pas d'argument
         self.assertEqual(Itineraire().get_argument('itineraire '), '\nitineraire (Adresse 1) / (Adresse 2) /route\n\n')
 
-        # Test si la méthode renvoie bien la doc
+        # Test si la méthode renvoie bien la doc lorsqu'il n'y a rien comme arguments
         self.assertEqual(Itineraire().get_argument('itineraire '), Itineraire().__doc__)
 
         # Test quand la méthode ne reçoit pas d'argument "/route"
@@ -233,7 +239,7 @@ class Test_ChatBot_itineraire(unittest.TestCase):
         # Test quand la méthode ne reçoit rien 
         self.assertEqual(Addresse().get_addresse(''), 0)
         
-        # Test quand la méthode recçoit un tuple en place d'une string 
+        # Test quand la méthode reçoit un tuple en place d'une string 
         self.assertRaises(TypeError, Addresse().get_addresse, 56)
         """
 

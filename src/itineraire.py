@@ -107,6 +107,8 @@ itineraire (Adresse 1) / (Adresse 2) /route
                 requests.exceptions.ConnectionError: la traduction ne fonctionne pas
         """
 
+        if message =='' or message =="" or message is None:
+            return self.__doc__
         valeurs = self.get_argument(message)
         if valeurs == self.__doc__:
             return self.__doc__
@@ -141,7 +143,7 @@ itineraire (Adresse 1) / (Adresse 2) /route
         # https://maps.open-street.com/api/route/?origin="+coord1x+","+coord1y+"&destination="+coord2x+","+coord2y+"&mode=driving&key=143323c5ab5dfe15ec89b2bbb320bea7
         url_final = "https://maps.open-street.com/api/route/?origin=" + str(lat1) + "," + str(
             long1) + "&destination=" + str(lat2) + "," + str(
-            long2) + "&mode=driving&key=9744eec549f1c82b18af8a10f26d1489"
+            long2) + "&mode=driving&key=bb19b66d645ba9c738d69f239b2808ec"
         r_final = requests.get(url_final)
         data = r_final.json()
         try:

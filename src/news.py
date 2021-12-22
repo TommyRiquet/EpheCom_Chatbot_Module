@@ -52,7 +52,6 @@ news (Sujet) (Nombre de Sujet(min 1, max 10))
 
             if link_increment == nbr_query:
                 return response
-
         if response != nbr_query:
             message = "Le temps alloué à la recherche à été excédé sans obtenir tout les resultats attendus. Possible" \
                       " qu'un nombre important de doublons se soit générés "
